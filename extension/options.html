@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+<head>
+<title id="widget-title">Irish Rail | Iarnród Éireann</title>
+<script src="stations.js"></script>
+<style>
+html
+{
+    border-top:64px solid #e9eaf0;
+    border-bottom:64px solid #dee1e9;
+    background:url(assets/options.bg.png) top center repeat-x #dee1e9;
+    color:#234;
+}
+body
+{
+    margin:auto;
+    min-width:500px;
+    width:50%;
+    font-size: 12px;
+    font-family: sans-serif;
+}
+a
+{
+    text-decoration:none;
+    font-weight:bold;
+    color:#234;
+    text-shadow:0 1px 0 #fff, 0 0 2px #9cf;
+}
+a:hover
+{
+    color:#234;
+}
+fieldset
+{
+    background:#e9eaf0;
+    border:none;
+    border-radius:4px;
+    margin:32px 0;
+    padding:16px;
+}
+footer
+{
+    text-align:right;
+}
+h1
+{
+    margin:0;
+    font:normal normal 48px/48px sans-serif;
+    text-shadow:0 1px 0 #fff;
+}
+h2
+{
+    margin:0;
+    font:normal normal 12px/16px sans-serif;
+}
+legend
+{
+    font:normal 18px sans-serif;
+    text-shadow:0 1px 0 #fff;
+}
+.buttons{
+	text-align: center;
+}
+.buttons input{
+    font-size: 16px;
+}
+.feed-url{
+    width:450px;
+}
+header{
+    height:64px;
+    padding-left:72px;
+    background:url(ie.png) 2px 2px no-repeat;
+    margin-bottom:32px;
+    white-space:nowrap;
+}
+
+@media (max-height:360px){
+    .view-mode {display: none;}
+    body {width:90%; min-width:0px;}
+    html {border: none;}
+    fieldset{margin:10px 0 15px 0;}
+    header{
+        height: auto;
+        padding-left: 47px;
+        background-size: 35px 35px;
+        margin: 10px 0 20px 0;
+    }
+    h1{
+        font:normal normal 20px/20px sans-serif;
+        text-shadow:0 1px 0 #fff;
+    }
+    .feed-url{width:100%;}
+    legend
+    {
+        font:normal 14px sans-serif;
+        text-shadow:0 1px 0 #fff;
+        font-weight: bold;
+    }
+}
+
+</style>
+</head>
+<body>
+    <header class="view-mode"><h1><span id="widget-name">Extension name</span></h1><h2>by <a href="#" id="widget-author">Developer</a></h2></header>
+    <div>
+        <fieldset>
+            <legend>Choose Station:</legend>
+            <select id="stationCode" name="stationCode">
+                <option value=""></option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend>Direction:</legend>
+            <select id="direction" name="direction">
+                <option value="">Both</option>
+                <option value="Southbound">Northbound</option>
+                <option value="Northbound">Southbound</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend>Choose feeds number:</legend>
+            <input type="number" name="count" min="1" value="1"/>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Set time interval (seconds):</legend>
+            <input type="number" name="interval" min="1" value="1"/>
+        </fieldset>
+        
+        <div class="buttons view-mode">
+        	<input type="button" onclick="window.close();" value="Done"/>
+        </div>
+    </div>
+<script>
+
+(function()
+{
+    var storage = window.widget.preferences;
+    var formElements = document.querySelectorAll( 'input,select' );
+	
+	function addStations(){
+		var list = document.getElementById('stationCode');
+		for(station in stations){
+			var option = document.createElement('option');
+			option.value=station;
+			option.innerHTML=stations[station].en;
+			list.appendChild(option);
+		}
+	}
+	addStations();
+	
+
+    function walkElements(){
+        var type,
+            value;
+            
+        for( var i=0,element=null; element=formElements[i++]; ){
+            value = storage.getItem(element.name);
+            type = element.type.toLowerCase();
+            if (type == 'number') element.value = value;
+            else if (type == 'select-one'){
+                for( var j=0,option=null; option=element.options[j++]; )
+                {
+                    if (option.value == value){
+                        option.selected = true;
+                        break;
+                    }
+                }
+            }
+            element.addEventListener( 'change', changedElement, true );
+        }
+    }
+
+    function changedElement(e){
+        var element = e.currentTarget;
+        var type    = element.type.toLowerCase();
+        var name    = element.name;
+        var value   = element.value;
+        
+        if ( type == 'number'){
+            var patt = /\D/;
+            if (patt.test(value) || value == '')
+                value = element.min;
+        }
+        else if (type == 'select-one') {
+            value = element.options[element.selectedIndex].value;
+        }
+        storage.setItem( name, value );
+    }
+    
+    walkElements();
+    
+    function $( id, txt, href ){
+        var e = document.getElementById(id);
+        if( e )
+        {
+            e.textContent = txt;
+            if( href||'' )
+            {
+                e.href = href||'#';
+            }
+        }
+    }
+    
+    $( 'widget-title', widget.name );
+    $( 'widget-name', widget.name );
+    $( 'widget-author', widget.author, widget.authorHref );
+
+})();
+</script>
+</body>
+</html>
