@@ -1,23 +1,28 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/speed-gram/" version="0.1">
-  <name>Speedgram</name>
-  
+<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/speediegram" version="0.1" viewmodes="minimized">
+  <name>Speediegram</name>
   <feature name="opera:speeddial">
-    <param name="url" value="http://instagram.com"/>
+    <param name="url" value="http://www.irishrail.ie"/>
   </feature>
 
   <icon src="assets/Instagram-logo-128.png"/>
   <icon src="assets/Instagram-logo-64.png"/>
-  
+
   <access origin="https://instagram.com" subdomains="true"/>
   <access origin="http://amazonaws.com" subdomains="true"/>
   <access origin="http://smallroomstudios.net"/>
-  
-  <preference name="endpoint" value="https://api.instagram.com/v1/"/>
+  <access origin="http://paddy2k.github.com"/>
+
+  <preference name="apiEndpoint" value="https://api.instagram.com/v1/"/>
+  <preference name="authEndpoint" value="https://instagram.com/oauth/authorize/"/>
   <preference name="feedPath" value="users/self/feed?access_token="/>
-    
-  <author href="http://twitter.com/paddy2k">paddy2k</author>
+  <preference name="callback" value="http://paddy2k.github.com/speediegram/index.html"/>
+  <preference name="clientId" value="7ac4b011a4ae43a4a03ba34ed7b0ec6b"/>
   
+
+
+  <author href="https://twitter.com/paddy2k">paddy2k</author>
+
   <description xml:lang="en">A realtime slideshow from your Instagram feed
 This extension uses the Instagram(tm) API and is not endorsed or certified by Instagram. All Instagram(tm) logoes and trademarks displayed on this extension are property of Instagram.</description>
 </widget>

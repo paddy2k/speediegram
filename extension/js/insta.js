@@ -1,7 +1,7 @@
 function receiveMessage(e){
-  widget.token=e.data;
+  widget.preferences.token=e.data;
   var api = new XMLHttpRequest();
-  var api_url = widget.endpoint + widget.feedPath + widget.token;
+  var api_url = widget.preferences.apiEndpoint + widget.preferences.feedPath + widget.preferences.token;
   api.open( 'GET', api_url, true );
   api.onreadystatechange=function(e){
     if( this.readyState!==4 ){
@@ -22,4 +22,11 @@ function receiveMessage(e){
   api.send(null);
 }
 window.addEventListener("message", receiveMessage, false);
-document.body.innerHTML="<iframe src='http://smallroomstudios.net/opera/instagram.html'/>";
+
+var authDialog = 
+  widget.preferences.authEndpoint+
+  '?client_id='+widget.preferences.clientId
+  +'&redirect_uri='+widget.preferences.callback +'?widget='+window.location.host
+  +'&response_type=token';
+
+opera.contexts.speeddial.url = authDialog;

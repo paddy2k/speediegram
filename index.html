@@ -15,14 +15,14 @@
   
     var token = window.location.hash.substr(1).split('=');
     if(token[0]==="access_token"){
-      localStorage.token = token[1];
+      sessionStorage.token = token[1];
       window.close();
     }
   }
 
   function checkForToken(){
-    if(localStorage.token){
-      window.parent.postMessage(localStorage.token, "*"); 
+    if(sessionStorage.token){
+      window.parent.postMessage(sessionStorage.token, "*"); 
       clearInterval(watch);
     }
   }
