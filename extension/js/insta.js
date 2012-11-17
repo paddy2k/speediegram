@@ -1,5 +1,5 @@
-function receiveMessage(e){
-  widget.preferences.token=e.data;
+opera.extension.onmessage = function(e) {
+  widget.preferences.token = e.data;
   var api = new XMLHttpRequest();
   var api_url = widget.preferences.apiEndpoint + widget.preferences.feedPath + widget.preferences.token;
   api.open( 'GET', api_url, true );
@@ -21,12 +21,10 @@ function receiveMessage(e){
   }
   api.send(null);
 }
-window.addEventListener("message", receiveMessage, false);
 
-var authDialog = 
-  widget.preferences.authEndpoint+
+var authDialog = widget.preferences.authEndpoint+
   '?client_id='+widget.preferences.clientId
-  +'&redirect_uri='+widget.preferences.callback +'?widget='+window.location.host
+  +'&redirect_uri='+widget.preferences.callback
   +'&response_type=token';
 
 opera.contexts.speeddial.url = authDialog;
