@@ -2,3 +2,16 @@ html *{
 	padding:0px;
 	margin:0px;
 }
+#logo{
+  position:absolute;
+  bottom: 5px;
+  right: 5px;
+  height: 20px;
+}
+@media only screen and (min-width: 300px) {
+	#logo{
+	  bottom: 10px;
+	  right: 10px;
+	  height: 40px;
+	}
+}

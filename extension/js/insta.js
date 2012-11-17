@@ -25,7 +25,7 @@ function printGrams(){
       return false;
     };
 
-    document.body.innerHTML='';
+    document.getElementById('frames').innerHTML='';
     var feed = JSON.parse(this.response);
     for(var i=0;feed.data.length>i;i++){
       var url = feed.data[i].images.thumbnail.url;
@@ -33,7 +33,7 @@ function printGrams(){
       img.style.float="left";
       img.style.width="25%";
       img.src = url;
-      document.body.appendChild(img);
+      document.getElementById('frames').appendChild(img);
     }
   }
   api.send(null);
