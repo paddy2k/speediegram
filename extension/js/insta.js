@@ -1,5 +1,22 @@
+var widgetInit =  widget.preferences.authEndpoint; // HACK 
+var prefs = widget.preferences;
+var authDialog = prefs.authEndpoint+
+  '?client_id='+prefs.clientId
+  +'&redirect_uri='+prefs.callback
+  +'&response_type=token';
+  
+opera.contexts.speeddial.url = authDialog;
+
 opera.extension.onmessage = function(e) {
   widget.preferences.token = e.data;
+  printGrams();
+}
+
+function printGrams(){
+  if(prefs.token=='undefined' || prefs.token==''){
+    return false;
+  }
+
   var api = new XMLHttpRequest();
   var api_url = widget.preferences.apiEndpoint + widget.preferences.feedPath + widget.preferences.token;
   api.open( 'GET', api_url, true );
@@ -8,7 +25,7 @@ opera.extension.onmessage = function(e) {
       return false;
     };
 
-  document.body.innerHTML='';
+    document.body.innerHTML='';
     var feed = JSON.parse(this.response);
     for(var i=0;feed.data.length>i;i++){
       var url = feed.data[i].images.thumbnail.url;
@@ -21,10 +38,5 @@ opera.extension.onmessage = function(e) {
   }
   api.send(null);
 }
-
-var authDialog = widget.preferences.authEndpoint+
-  '?client_id='+widget.preferences.clientId
-  +'&redirect_uri='+widget.preferences.callback
-  +'&response_type=token';
-
-opera.contexts.speeddial.url = authDialog;
+printGrams();
+setInterval(printGrams, prefs.updateInterval);
