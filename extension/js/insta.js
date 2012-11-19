@@ -42,8 +42,7 @@ function printGrams(){
     for(var i=0;feed.data.length>i;i++){
       var url = feed.data[i].images.thumbnail.url;
       var img = document.createElement("IMG");
-      img.style.float="left";
-      img.style.width="25%";
+      img.className="grid";
       img.src = url;
       document.getElementById('frames').appendChild(img);
     }

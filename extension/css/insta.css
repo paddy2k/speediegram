@@ -12,11 +12,23 @@ html *{
   right: 5px;
   height: 20px;
 }
+#frames img.grid{
+  width:33.33%;
+  float:left;
+}
+@media all and (min-width: 200px) {
+	#frames img.grid{
+	  width:25%;
+	}
+}
 @media all and (min-width: 250px) {
 	#logo{
 	  bottom: 7px;
 	  right: 7px;
 	  height: 30px;
+	}
+	#frames img.grid{
+	  width:20%;
 	}
 }
 @media all and (min-width: 300px) {
