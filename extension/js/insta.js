@@ -3,8 +3,10 @@ var prefs = widget.preferences;
 var authDialog = prefs.authEndpoint+
   '?client_id='+prefs.clientId
   +'&redirect_uri='+prefs.callback
-  +'&scope=likes+comments'
   +'&response_type=token';
+
+// Set Loading text
+opera.contexts.speeddial.title="Loading...";
   
 opera.contexts.speeddial.url = authDialog;
 
@@ -45,6 +47,8 @@ function printGrams(){
       img.src = url;
       document.getElementById('frames').appendChild(img);
     }
+    document.body.className='';
+    opera.contexts.speeddial.title="OMG Muffins @ Cafe Bliss";
   }
   api.send(null);
 }
