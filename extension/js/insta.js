@@ -17,10 +17,6 @@ var insta = {
   },
 
   cron : function(){
-    if(insta.prefs.token=='undefined' || insta.prefs.token==''){
-      return false;
-    }
-
     // Endpoint
     switch(insta.prefs.feed){
       default:
@@ -85,11 +81,18 @@ var insta = {
       '?client_id='+insta.prefs.clientId
       +'&redirect_uri='+insta.prefs.callback
       +'&response_type=token';
+    
+    opera.extension.onmessage = insta.message;
+
+    if(insta.prefs.token=='undefined' || insta.prefs.token==''){
+      opera.contexts.speeddial.title="Click to Login";
+      opera.contexts.speeddial.url = insta.authDialog;
+      return false;
+    }
 
     // Set Loading text
     opera.contexts.speeddial.title="Loading...";
     opera.contexts.speeddial.url = insta.authDialog;
-    opera.extension.onmessage = insta.message;
 
     insta.cron();
   }
