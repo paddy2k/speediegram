@@ -3,13 +3,23 @@ var prefs = widget.preferences;
 var authDialog = prefs.authEndpoint+
   '?client_id='+prefs.clientId
   +'&redirect_uri='+prefs.callback
+  +'&scope=likes+comments'
   +'&response_type=token';
   
 opera.contexts.speeddial.url = authDialog;
 
 opera.extension.onmessage = function(e) {
-  widget.preferences.token = e.data;
-  printGrams();
+  var m = e.data;
+  switch(m.action){
+    case 'success':
+      widget.preferences.token = m.access_token;
+      printGrams();
+      break;
+    case 'error':
+      console.log('auth error');
+      document.body.innerHTML = 'auth error';
+      break;
+  }
 }
 
 function printGrams(){
