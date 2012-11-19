@@ -40,7 +40,6 @@ var insta = {
             insta.get(api_url, insta.stack);
           }
         });
-        if
         setTimeout(insta.cron, insta.prefs.updateInterval);
         break;
       case 'fade':
