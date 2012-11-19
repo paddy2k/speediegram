@@ -13,7 +13,7 @@ var insta = {
     }
 
     document.body.className='';
-    opera.contexts.speeddial.title="OMG Muffins @ Cafe Bliss"; 
+    opera.contexts.speeddial.title="Speedie-gram"; 
   },
 
   cron : function(){
@@ -56,7 +56,8 @@ var insta = {
     api.onreadystatechange=function(e){
       if(this.readyState===4){
         var feed = JSON.parse(this.response);
-        callback(feed.data);
+        insta.photos = feed.data;
+        callback(insta.photos);
       }
     }
     api.send(null);
@@ -81,7 +82,7 @@ var insta = {
       '?client_id='+insta.prefs.clientId
       +'&redirect_uri='+insta.prefs.callback
       +'&response_type=token';
-    
+
     opera.extension.onmessage = insta.message;
 
     if(insta.prefs.token=='undefined' || insta.prefs.token==''){
