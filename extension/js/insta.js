@@ -17,7 +17,7 @@ var insta = {
   },
 
   cron : function(){
-    if(this.prefs.token=='undefined' || this.prefs.token==''){
+    if(insta.prefs.token=='undefined' || insta.prefs.token==''){
       return false;
     }
 
@@ -31,10 +31,27 @@ var insta = {
     // Layout
     switch(insta.prefs.layout){
       case 'grid':
-        insta.get(api_url, this.grid);
+        insta.get(api_url, insta.grid);
+        setTimeout(insta.cron, insta.prefs.updateInterval);
+        break;
+      case 'stack':        
+        insta.interval = setInterval(function(){
+          if(insta.photos.length){
+            var photo = insta.photos.shift();
+            // etc
+          }
+          else{
+            insta.get(api_url, insta.stack);
+          }
+        });
+        if
+        setTimeout(insta.cron, insta.prefs.updateInterval);
+        break;
+      case 'fade':
+        insta.get(api_url, insta.fade);
+        setTimeout(insta.cron, insta.prefs.updateInterval);
         break;
     }
-    setTimeout(insta.cron, insta.prefs.updateInterval);
   },
 
   get : function(url, callback){
@@ -71,7 +88,7 @@ var insta = {
 
     // Set Loading text
     opera.contexts.speeddial.title="Loading...";
-    opera.contexts.speeddial.url = this.authDialog;
+    opera.contexts.speeddial.url = insta.authDialog;
     opera.extension.onmessage = insta.message;
 
     insta.cron();
