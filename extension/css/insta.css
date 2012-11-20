@@ -12,6 +12,9 @@ html *{
   right: 5px;
   height: 20px;
 }
+#frames{
+  width:101%;
+}
 #frames img.grid{
   width:33.33%;
   float:left;

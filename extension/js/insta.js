@@ -4,8 +4,8 @@ var insta = {
   photos:{},
   grid : function(photos){
     document.getElementById('frames').innerHTML='';
-    for(var i=0;photos.length>i;i++){
-      var url = photos[i].images.thumbnail.url;
+    for(var i=0;insta.photos.length>i;i++){
+      var url = insta.photos[i].images.thumbnail.url;
       var img = document.createElement("IMG");
       img.className="grid";
       img.src = url;
@@ -30,7 +30,7 @@ var insta = {
         insta.get(api_url, insta.grid);
         setTimeout(insta.cron, insta.prefs.updateInterval);
         break;
-      case 'stack':        
+      case 'stack':
         insta.interval = setInterval(function(){
           if(insta.photos.length){
             var photo = insta.photos.shift();
