@@ -2,8 +2,10 @@ var test = widget.preferences.callback;
 var insta = {
   prefs : widget.preferences,
   photos:{},
-  grid : function(photos){
+  grid : function(photos, page){
+    if(page == 2){
     document.getElementById('frames').innerHTML='';
+    }
     for(var i=0;insta.photos.length>i;i++){
       var url = insta.photos[i].images.thumbnail.url;
       var img = document.createElement("IMG");
@@ -27,7 +29,7 @@ var insta = {
     // Layout
     switch(insta.prefs.layout){
       case 'grid':
-        insta.get(api_url, insta.grid);
+        insta.get(api_url, insta.grid, 2);
         setTimeout(insta.cron, insta.prefs.updateInterval);
         break;
       case 'stack':
@@ -37,26 +39,31 @@ var insta = {
             // etc
           }
           else{
-            insta.get(api_url, insta.stack);
+            insta.get(api_url, insta.stack, 1);
           }
         });
         setTimeout(insta.cron, insta.prefs.updateInterval);
         break;
       case 'fade':
-        insta.get(api_url, insta.fade);
+        insta.get(api_url, insta.fade, 1);
         setTimeout(insta.cron, insta.prefs.updateInterval);
         break;
     }
   },
 
-  get : function(url, callback){
+  get : function(url, callback, page){
     var api = new XMLHttpRequest();
+    var _this = this;
+
     api.open( 'GET', url, true );
     api.onreadystatechange=function(e){
       if(this.readyState===4){
         var feed = JSON.parse(this.response);
         insta.photos = feed.data;
-        callback(insta.photos);
+        callback(_this.photos, page--);
+        if(page>0){
+          _this.get(feed.pagination.next_url, callback, false);
+        }
       }
     }
     api.send(null);
