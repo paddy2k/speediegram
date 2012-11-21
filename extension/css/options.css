@@ -5,6 +5,7 @@ html, body, #main{
 html *{
   padding:0px;
   margin:0px;
+  font-family: "proxima-nova", "Helvetica Neue", "Arial", "Helvetica", sans-serif;
 }
 body{
 	background: url("/assets/body_noise_media.png") 50% 0px #E3E8EC;
@@ -67,8 +68,7 @@ nav li label {
   text-decoration: none;
   font-weight:normal;
 }
-nav li span{
-  display: block;
+nav li div{
   vertical-align: middle;
   height:100%;
   width: 100%;
@@ -76,8 +76,21 @@ nav li span{
 nav li input{
   display: none;
 }
-nav li input:checked + span{
+nav li input:checked + div{
   background-color: rgba(0,0,0,0.4);
+}
+nav li div.label-inner{
+  left:10px;
+  top:45px;
+  font-size:1.6em;
+  position: relative;
+}
+nav li i{
+  width: 27px;
+  height: 22px;
+  display: inline-block;
+  background-position: -6px -8px;
+  background-image: url("/assets/photo-page-assets.png");
 }
 
 @media all and (max-width: 500px) {
@@ -96,8 +109,16 @@ nav li input:checked + span{
     width:15%;
     border: 0px solid #1C5380;
   }
+  nav li div.label-inner{
+    left:13px;
+    top:23px;
+    height:48px;
+  }
   nav li label {
     height: 71px
+  }
+  nav li label span{
+    display: none;
   }
   #inner{
     width:85%;
