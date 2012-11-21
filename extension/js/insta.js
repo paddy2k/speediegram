@@ -88,7 +88,7 @@ var insta = {
     switch(m.action){
       case 'success':
         insta.prefs.token = m.access_token;
-        insta.grid();
+        insta.cron();
         break;
       case 'error':
         console.log('auth error');
@@ -106,7 +106,7 @@ var insta = {
 
     opera.extension.onmessage = insta.message;
 
-    if(insta.prefs.token=='undefined' || insta.prefs.token==''){
+    if(typeof(insta.prefs.token)=='undefined' || insta.prefs.token==''){
       opera.contexts.speeddial.title="Click to Login";
       opera.contexts.speeddial.url = insta.authDialog;
       return false;
