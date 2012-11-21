@@ -17,7 +17,8 @@ var insta = {
     }
 
     document.body.className='';
-    opera.contexts.speeddial.title="Speedie-gram"; 
+    opera.contexts.speeddial.title="Speedie-gram";
+    opera.contexts.speeddial.url=insta.photos[0].link;
   },
 
   cron : function(){
@@ -112,9 +113,6 @@ var insta = {
     }
 
     // Set Loading text
-    opera.contexts.speeddial.title="Loading...";
-    opera.contexts.speeddial.url = insta.authDialog;
-
     insta.cron();
   }
 }
