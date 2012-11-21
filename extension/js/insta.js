@@ -1,17 +1,19 @@
 var test = widget.preferences.callback;
 var insta = {
   prefs : widget.preferences,
-  photos:{},
+  photos:[],
   grid : function(photos, page){
     if(page == 2){
-    document.getElementById('frames').innerHTML='';
+      document.getElementById('frames').innerHTML='';
+      insta.photos=[];
     }
-    for(var i=0;insta.photos.length>i;i++){
-      var url = insta.photos[i].images.thumbnail.url;
+    for(var i=0;photos.length>i;i++){
+      var url = photos[i].images.thumbnail.url;
       var img = document.createElement("IMG");
       img.className="grid";
       img.src = url;
       document.getElementById('frames').appendChild(img);
+      insta.photos.push(photos[i]);
     }
 
     document.body.className='';
@@ -19,18 +21,31 @@ var insta = {
   },
 
   cron : function(){
+    clearTimeout(insta.timeout);
+    var api_url = '';
     // Endpoint
     switch(insta.prefs.feed){
+      case 'tags':
+        api_url = "tags/"+insta.prefs.searchTag+"/media/recent?"; 
+        break;
+      case 'popular':
+        api_url = "media/popular?";
+        break;
+      case 'geo':
+        api_url = "media/search?lat=48.858844&lng=2.294351&"; 
+        break;
+      case 'me':
       default:
-        var api_url = insta.prefs.apiEndpoint + insta.prefs.feedPath + insta.prefs.token; 
+        api_url = "users/self/feed?"; 
         break;
     }
-
+    api_url = insta.prefs.apiEndpoint + api_url + 'access_token=' + insta.prefs.token;
+    
     // Layout
     switch(insta.prefs.layout){
       case 'grid':
         insta.get(api_url, insta.grid, 2);
-        setTimeout(insta.cron, insta.prefs.updateInterval);
+        
         break;
       case 'stack':
         insta.interval = setInterval(function(){
@@ -42,13 +57,12 @@ var insta = {
             insta.get(api_url, insta.stack, 1);
           }
         });
-        setTimeout(insta.cron, insta.prefs.updateInterval);
         break;
       case 'fade':
         insta.get(api_url, insta.fade, 1);
-        setTimeout(insta.cron, insta.prefs.updateInterval);
         break;
     }
+    insta.timeout = setTimeout(insta.cron, insta.prefs.updateInterval);
   },
 
   get : function(url, callback, page){
@@ -59,8 +73,7 @@ var insta = {
     api.onreadystatechange=function(e){
       if(this.readyState===4){
         var feed = JSON.parse(this.response);
-        insta.photos = feed.data;
-        callback(_this.photos, page--);
+        callback(feed.data, page--);
         if(page>0){
           _this.get(feed.pagination.next_url, callback, false);
         }
@@ -81,6 +94,7 @@ var insta = {
         document.body.innerHTML = 'auth error';
         break;
     }
+    window.location.reload();
   },
 
   init : function(){
@@ -104,4 +118,4 @@ var insta = {
     insta.cron();
   }
 }
-window.addEventListener("load", insta.init, false); insta
+window.addEventListener("load", insta.init, false);

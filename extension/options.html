@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Speedie-gram</title>
-    <script src="stations.js"></script>
+    <script src="js/options.js"></script>
     <link rel="stylesheet" href="css/options.css">
   </head>
   <body>
@@ -16,8 +16,8 @@
         <ul>
           <form>
             <li>
-              <label for="nav1">
-                <input name="nav" id="nav1" type="radio" checked="checked"/>
+              <label for="photo">
+                <input name="nav" id="photo" type="radio" checked="checked"/>
                 <div class="label">
                   <div class="label-inner">
                     <i></i>
@@ -27,8 +27,8 @@
               </label>
              </li>
             <li>
-              <label for="nav2">
-                <input name="nav" id="nav2" type="radio"/>
+              <label for="feeds">
+                <input name="nav" id="feeds" type="radio"/>
                 <div class="label">
                   <div class="label-inner">
                     <i></i>
@@ -38,8 +38,8 @@
               </label>
             </li>
             <li>
-              <label for="nav3">
-                <input name="nav" id="nav3" type="radio"/>
+              <label for="prefs">
+                <input name="nav" id="prefs" type="radio"/>
                 <div class="label">
                   <div class="label-inner">
                     <i></i>
@@ -49,8 +49,8 @@
               </label>
             </li>
             <li>
-              <label for="nav4">
-                <input name="nav" id="nav4" type="radio"/>
+              <label for="info">
+                <input name="nav" id="info" type="radio"/>
                 <div class="label">
                   <div class="label-inner">
                     <i></i>
@@ -60,8 +60,8 @@
               </label>
             </li>
             <li>
-              <label for="nav5">
-                <input name="nav" id="nav5" type="radio"/>
+              <label for="help">
+                <input name="nav" id="help" type="radio"/>
                 <div class="label">
                   <div class="label-inner">
                     <i></i>
@@ -73,8 +73,37 @@
           </form>
         </ul>
       </nav>
-      <div id="inner">
-        test
+      <div id="inner" class="photo">
+        <div id="photo">
+          <img id="currentPhoto" src=""/>
+        </div>
+        <div id="feeds">
+          <p>
+            Search Tag: <input type="text" value="" id="searchTag">
+          </p>
+          <p>
+            Feeds: <select id="feed">
+              <option value="me">Me</options>
+              <option value="tags">Tags</options>
+              <option value="geo">Geo</options>
+              <option value="popular">Popular</options>
+            </select>
+          </p>
+        </div>
+        <div id="prefs">
+          <p>
+            Update Interval: <input type="tel" value="" id="updateInterval">
+          </p>
+          <p>
+            Layout: <select id="layout">
+              <option value="grid">Grid</options>
+              <option value="stack">Stack</options>
+              <option value="fade">Fade</options>
+            </select>
+          </p>
+        </div>
+        <div id="info">INFO</div>
+        <div id="help">HELP</div>
       <div>
     </div>
   </body>
