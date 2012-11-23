@@ -15,7 +15,7 @@ header{
   box-shadow: 0px 0px 2px #888;
 }
 #logo-holder{
-  width:1000px;
+  width:800px;
   margin:auto;
   padding-top: 5px;  
 }
@@ -23,11 +23,11 @@ header{
   padding-left:4px
 }
 #main{
-  width:1000px;
-  height:600px;
+  width:800px;
+  height:500px;
   border:1px solid blue;
   border-radius: 5px;
-  margin:auto;
+  margin: 20px auto;
   border: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   flex-flow: row;
@@ -65,7 +65,7 @@ nav li label {
   display:block;
   vertical-align: middle;
   color:#eee;
-  height: 120px;
+  height: 100px;
   text-decoration: none;
   font-weight:normal;
 }
@@ -80,9 +80,15 @@ nav li input{
 nav li input:checked + div{
   background-color: rgba(0,0,0,0.4);
 }
+nav li:first-child input:checked + div{
+  border-top-left-radius: 10px;
+}
+nav li:last-child input:checked + div{
+  border-bottom-left-radius: 10px;
+}
 nav li div.label-inner{
-  left:10px;
-  top:45px;
+  left:20px;
+  top:35px;
   font-size:1.6em;
   position: relative;
 }
@@ -93,7 +99,112 @@ nav li i{
   background-position: -6px -8px;
   background-image: url("/assets/photo-page-assets.png");
 }
-
+#inner > section{
+  display: none;
+}
+#inner.photo #photo,
+#inner.feeds #feeds,
+#inner.prefs #prefs,
+#inner.info #info,
+#inner.help #help{
+  display: block;
+}
+article{
+  padding:10px;
+}
+#currentPhoto{
+  width:157px;
+  float:left;
+  padding:10px;
+  background-color: #FFF;
+}
+article > div{}
+#currentDetails{
+  float:left
+;  padding-left: 15px;
+  height:177px;
+  width:67%;
+}
+#currentComments,
+#currentLikes{
+  display:inline-block;
+  width:120px;
+  height:60px;
+  margin: auto 33px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #5F8CB0;
+  background-image: url("/assets/noise-2.png"), -o-linear-gradient(left, #4A7496, #5F8CB0);
+  background-position: 50% 50%;
+  border: 1px solid #1C5380;
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.102), inset 1px 0px 0px rgba(255, 255, 255, 0.047), 0px 1px 3px rgba(0, 0, 0, 0.149), -2px 0px 2px rgba(0, 0, 0, 0.102);
+  border-radius: 10px;
+  color:#F4F7F9;
+  font-weight: bold;
+  font-size: 1.5em; 
+}
+#currentComments:hover,
+#currentLikes:hover{
+  background-image: url("/assets/noise-2.png"), -o-linear-gradient(left, #426987, #547D9C);
+}
+#currentComments span,
+#currentLikes span{
+  display: block;
+  position: relative;
+  top:-24px;
+  right:-14px;  
+}
+#currentLikes i,
+#currentComments i{
+  margin-right:5px;
+  margin-top:17px; 
+  width: 27px;
+  height: 22px;
+  background-image: url("/assets/photo-page-assets.png");
+  display: block;
+  position: relative;
+  right:-34px;
+}
+#currentLikes i{
+  background-position: -6px -8px;
+}
+#currentLikes:hover i{
+  background-position: -106px -8px;
+}
+#currentComments i{
+  background-position: -6px -108px;
+}
+#currentComments:hover i{
+  background-position: -106px -108px;
+}
+#currentNames{
+  height:105px;
+}
+blockquote {
+  margin: 1em 2em;
+  border-left: 1px dashed #999;
+  padding-left: 1em;
+}
+blockquote p:first-letter {
+  float: left;
+  margin: .2em .3em .1em 0;
+  font-family: "Monotype Corsiva", "Apple Chancery", fantasy;
+  font-size: 220%;
+  font-weight: bold;
+}
+#currentQuote{
+  clear:both;
+}
+#currentUser{
+  font-size: 2em;
+  font-style:italic;
+}
+#atSign{
+  font-weight: 800;
+  color:#999;
+  font-size: 1.6em;
+  margin-right: 2px; 
+}
 @media all and (max-width: 500px) {
   body{
     background: inherit;
@@ -104,7 +215,8 @@ nav li i{
   #main{
     width:100%;
     height:100%;
-    border: 0px
+    border: 0px;
+    margin:auto;
   }
   nav{
     width:15%;
@@ -129,15 +241,29 @@ nav li i{
     background: url("/assets/body_noise_media.png") 50% 0px #E3E8EC;
     padding: 5px;
   }
-}
-
-#inner > div{
-  display: none;
-}
-#inner.photo #photo,
-#inner.feeds #feeds,
-#inner.prefs #prefs,
-#inner.info #info,
-#inner.help #help{
-  display: block;
+  #currentDetails{
+    width: 49%;
+  }
+  #currentNames{
+    height: 52px;
+  }
+  #currentLikes,
+  #currentComments{
+    height: 52px; 
+    margin: 5px 33px;
+  }
+  #currentLikes i,
+  #currentComments i{
+    margin-top: 14px;
+  }
+  #currentName{
+    display: none;
+  }
+  #currentUser{
+    font-size: 1.5em;
+  }
+  #atSign{
+    font-size: 1.2em;
+    margin-right: 3px; 
+  }
 }

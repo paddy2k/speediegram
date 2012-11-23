@@ -74,10 +74,31 @@
         </ul>
       </nav>
       <div id="inner" class="photo">
-        <div id="photo">
-          <img id="currentPhoto" src=""/>
-        </div>
-        <div id="feeds">
+        <section id="photo">
+          <article>
+            <img id="currentPhoto" src=""/>
+            <div id="currentDetails">
+              <div id="currentNames">
+                <span id="atSign">@</span><span id="currentUser"></span>
+                <br/>
+                <span id="currentName"></span>
+              </div>
+              <div id="currentButton"> 
+                <div id="currentLikes">
+                  <i></i><span id="currentLikesValue">0</span>
+                </div>
+                <div id="currentComments">
+                  <i></i><span id="currentCommentsValue">0</span>
+                </div>
+              </div>
+            </div>
+            <div id="currentQuote">
+              <blockquote id="quote"></blockquote>
+            </div>
+
+          </article>
+        </section>
+        <section id="feeds">
           <p>
             Search Tag: <input type="text" value="" id="searchTag">
           </p>
@@ -89,8 +110,8 @@
               <option value="popular">Popular</options>
             </select>
           </p>
-        </div>
-        <div id="prefs">
+        </section>
+        <section id="prefs">
           <p>
             Update Interval: <input type="tel" value="" id="updateInterval">
           </p>
@@ -101,9 +122,9 @@
               <option value="fade">Fade</options>
             </select>
           </p>
-        </div>
-        <div id="info">INFO</div>
-        <div id="help">HELP</div>
+        </section>
+        <section id="info">INFO</section>
+        <section id="help">HELP</section>
       <div>
     </div>
   </body>

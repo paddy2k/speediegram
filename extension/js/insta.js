@@ -18,9 +18,26 @@ var insta = {
 
     document.body.className='';
     opera.contexts.speeddial.title="Speedie-gram";
-    opera.contexts.speeddial.url=insta.photos[0].link;
+//opera.contexts.speeddial.url=insta.photos[0].link;
   },
+  stack : function(photos, page){
+    if(page == 2){
+      document.getElementById('frames').innerHTML='';
+      insta.photos=[];
+    }
+    for(var i=0;photos.length>i;i++){
+      var url = photos[i].images.low_resolution.url;
+      var img = document.createElement("IMG");
+      img.className="grid";
+      img.src = url;
+      document.getElementById('frames').appendChild(img);
+      insta.photos.push(photos[i]);
+    }
 
+    document.body.className='';
+    opera.contexts.speeddial.title="Speedie-gram";
+//opera.contexts.speeddial.url=insta.photos[0].link;
+  },
   cron : function(){
     clearTimeout(insta.timeout);
     var api_url = '';
@@ -102,7 +119,8 @@ var insta = {
     insta.authDialog = insta.prefs.authEndpoint+
       '?client_id='+insta.prefs.clientId
       +'&redirect_uri='+insta.prefs.callback
-      +'&response_type=token';
+      +'&response_type=token'
+      +'&scope=basic+comments+relationships+likes';
 
     opera.extension.onmessage = insta.message;
 
