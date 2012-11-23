@@ -16,27 +16,26 @@ var insta = {
       insta.photos.push(photos[i]);
     }
 
-    document.body.className='';
+    document.body.removeAttribute('class');
     opera.contexts.speeddial.title="Speedie-gram";
-//opera.contexts.speeddial.url=insta.photos[0].link;
+    opera.contexts.speeddial.url=insta.photos[0].link;
   },
   stack : function(photos, page){
     if(page == 2){
-      document.getElementById('frames').innerHTML='';
       insta.photos=[];
     }
     for(var i=0;photos.length>i;i++){
       var url = photos[i].images.low_resolution.url;
       var img = document.createElement("IMG");
-      img.className="grid";
+      img.className="stack";
       img.src = url;
       document.getElementById('frames').appendChild(img);
       insta.photos.push(photos[i]);
     }
 
-    document.body.className='';
-    opera.contexts.speeddial.title="Speedie-gram";
-//opera.contexts.speeddial.url=insta.photos[0].link;
+    document.body.removeAttribute('class');
+    opera.contexts.speeddial.title=insta.photos[0].caption.text;
+    opera.contexts.speeddial.url=insta.photos[0].link;
   },
   cron : function(){
     clearTimeout(insta.timeout);
@@ -66,15 +65,16 @@ var insta = {
         
         break;
       case 'stack':
-        insta.interval = setInterval(function(){
-          if(insta.photos.length){
-            var photo = insta.photos.shift();
-            // etc
-          }
-          else{
-            insta.get(api_url, insta.stack, 1);
-          }
-        });
+        insta.get(api_url, insta.stack, 1);
+        // insta.interval = setInterval(function(){
+        //   if(insta.photos.length){
+        //     var photo = insta.photos.shift();
+        //     // etc
+        //   }
+        //   else{
+        //     insta.get(api_url, insta.stack, 1);
+        //   }
+        // });
         break;
       case 'fade':
         insta.get(api_url, insta.fade, 1);

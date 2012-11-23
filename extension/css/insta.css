@@ -17,6 +17,7 @@ body{
 }
 #frames{
   width:101%;
+  text-align: center;
 }
 #frames img.grid{
   width:33.33%;
@@ -56,15 +57,6 @@ div#loading{
   background-image: repeating-linear-gradient(90deg, #F92F4A, #F92F4A 12.5%, #FDB228 12.5%, #FDB228 25%, #61C07E 25%, #61C07E 37.5%, #3371FF 37.5%, #3371FF 50%, #F92F4A 50%, #F92F4A 62.5%, #FDB228 62.5%, #FDB228 75%, #61C07E 75%, #61C07E 87.5%, #3371FF 87.5%, #3371FF 100%);
 }
 
-img.stack:first-child{
-  animation:drop 4s ease-out;
-  animation-iteration-count:1;
-  display:block;
-  float: none;
-  position: absolute;
-
-}
-
 @keyframes roller {
   from { background-position: 0px 0px; }
   to { background-position: 1000px 0px; }
@@ -79,7 +71,39 @@ body.loading #logo{
 	display: none;
 }
 
-@keyframes drop {
-  from { transform: scale(4, 4) rotate(20deg) translate(0px, 0px); opacity: 0.5;}
-  to { transform: scale(1.1, 1.1) rotate(4deg) translate(10px, 10px); opacity: 1;}
+
+img.stack{
+  transition:all 0.5s ease-out;
+  display:block;
+  position: absolute;
+  height:100%;
+  transform: scale(4, 4) rotate(20deg) translate(0px, 10px);
+  opacity: 0;
+  padding: 1.8%;
+  background-color: #FFFFFF;
+}
+
+img.stack.dropA{
+  transform: scale(1.1, 1.1) rotate(4deg) translate(-7px, 19px);
+  opacity: 1;
+}
+img.stack.dropB{
+  transform: scale(1.1, 1.1) rotate(14deg) translate(7px, 19px);
+  opacity: 1;
+}
+img.stack.dropC{
+  transform: scale(1.1, 1.1) rotate(-8deg) translate(8px, 3px);
+  opacity: 1;
+}
+img.stack.dropD{
+  transform: scale(1.1, 1.1) rotate(9deg) translate(7px, -4px);
+  opacity: 1;
+}
+img.stack.dropE{
+  transform: scale(1.1, 1.1) rotate(2deg) translate(2px, 6px);
+  opacity: 1;
+}
+img.stack.dropF{
+  transform: scale(1.1, 1.1) rotate(-7deg) translate(-10px, 4px);
+  opacity: 1;
 }
