@@ -35,12 +35,12 @@ var options = {
   },
 
   loadPhoto : function(){
-    document.getElementById('currentPhoto').src=insta.photos[0].images.low_resolution.url;
-    document.getElementById('currentUser').innerText=insta.photos[0].user.username;
-    document.getElementById('currentName').innerText=insta.photos[0].user.full_name;
-    document.getElementById('currentLikesValue').innerText=insta.photos[0].likes.count;
-    document.getElementById('currentCommentsValue').innerText=insta.photos[0].comments.count;
-    document.getElementById('quote').innerText=insta.photos[0].caption.text;
+    document.getElementById('currentPhoto').src = insta.photos[0].images.low_resolution.url;
+    document.getElementById('currentUser').innerText = insta.photos[0].user.username;
+    document.getElementById('currentName').innerText = insta.photos[0].user.full_name;
+    document.getElementById('currentLikesValue').innerText = insta.photos[0].likes.count;
+    document.getElementById('currentCommentsValue').innerText = insta.photos[0].comments.count;
+    document.getElementById('quote').innerText = insta.photos[0].caption ? insta.photos[0].caption.text : '';
   }
 }
 window.addEventListener("load", options.init, false);
