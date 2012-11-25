@@ -22,6 +22,12 @@ header{
 #logo-holder img{
   padding-left:4px
 }
+#forkMe{
+  position: absolute;
+  top: 58px;
+  right: 0;
+  border: 0;
+}
 #main{
   width:800px;
   height:500px;

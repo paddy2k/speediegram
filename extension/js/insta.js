@@ -112,7 +112,7 @@ var insta = {
         document.body.innerHTML = 'auth error';
         break;
     }
-    window.location.reload();
+    // window.location.reload();
   },
 
   init : function(){
