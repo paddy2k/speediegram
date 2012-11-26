@@ -27,7 +27,7 @@ var insta = {
     if(insta.photos.length>2){
       var photo = insta.photos.shift();
       var rotate  = (70*Math.random())-35;
-      var tranX   = (56 *Math.random())-28;
+      var tranX   = (50 *Math.random())-25;
       var tranY   = (10 *Math.random())-5;
       
       var url = photo.images.low_resolution.url;
@@ -35,7 +35,7 @@ var insta = {
       img.className="stack hidden";
       img.src = url;
       img.dataset.info = JSON.stringify(photo);
-      img.style.transform="scale(1, 1) rotate("+rotate+"deg) translate("+tranX+"%, "+tranY+"%)";
+      img.style.transform="scale(1.2, 1.2) rotate("+rotate+"deg) translate("+tranX+"%, "+tranY+"%)";
 
       var image = document.getElementById('frames').appendChild(img);
       setTimeout(function(){
