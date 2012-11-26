@@ -12,6 +12,7 @@ var insta = {
       var img = document.createElement("IMG");
       img.className="grid";
       img.src = url;
+      img.dataset.info = JSON.stringify(photos[i]);
       document.getElementById('frames').appendChild(img);
       insta.photos.push(photos[i]);
     }
@@ -25,21 +26,29 @@ var insta = {
     clearTimeout(insta.timeout);
     if(insta.photos.length>2){
       var photo = insta.photos.shift();
-      var rotate  = (90*Math.random())-45;
+      var rotate  = (70*Math.random())-35;
       var tranX   = (56 *Math.random())-28;
-      var tranY   = (20 *Math.random())-10;
+      var tranY   = (10 *Math.random())-5;
       
       var url = photo.images.low_resolution.url;
       var img = document.createElement("IMG");
       img.className="stack hidden";
       img.src = url;
+      img.dataset.info = JSON.stringify(photo);
       img.style.transform="scale(1, 1) rotate("+rotate+"deg) translate("+tranX+"%, "+tranY+"%)";
-      var image = document.getElementById('frames').appendChild(img).classList;
-      setTimeout(function(){image.remove('hidden')}, 0);
-      
-      document.body.removeAttribute('class');
-      opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
-      opera.contexts.speeddial.url = photo.link;
+
+      var image = document.getElementById('frames').appendChild(img);
+      setTimeout(function(){
+        image.classList.remove('hidden');
+        opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
+        opera.contexts.speeddial.url = photo.link;
+
+        while(document.getElementById('frames').getElementsByClassName('stack').length>16){
+         document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('stack')[0]);
+        }
+
+        document.body.removeAttribute('class');
+      }, 1000);
     }
     else{
       insta.cron();
@@ -56,12 +65,8 @@ var insta = {
       insta.photos.push(photos[i]);
     }
 
-    while(document.getElementById('frames').getElementsByClassName('grid').length){
-     document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('grid')[0]);
-    }
-
-    while(document.getElementById('frames').getElementsByClassName('stack').length>10){
-     document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('stack')[0]);
+    while(document.querySelectorAll('#frames img:not(.stack)').length){
+     document.getElementById('frames').removeChild(document.querySelectorAll('#frames img:not(.stack)')[0]);
     }
 
     insta.stack();
@@ -76,12 +81,20 @@ var insta = {
       var img = document.createElement("IMG");
       img.className="fade hidden";
       img.src = url;
-      var image = document.getElementById('frames').appendChild(img).classList;
-      setTimeout(function(){image.remove('hidden')}, 0);
+      img.dataset.info = JSON.stringify(photo);
       
-      document.body.removeAttribute('class');
-      opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
-      opera.contexts.speeddial.url = photo.link;
+      var image = document.getElementById('frames').appendChild(img);
+      setTimeout(function(){
+        image.classList.remove('hidden');
+        opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
+        opera.contexts.speeddial.url = photo.link;
+        while(document.getElementById('frames').getElementsByClassName('fade').length>2){
+         document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('fade')[0]);
+        }
+
+        document.body.removeAttribute('class');
+      
+      }, 1000);
     }
     else{
       insta.cron();
@@ -98,12 +111,8 @@ var insta = {
       insta.photos.push(photos[i]);
     }
 
-    while(document.getElementById('frames').getElementsByClassName('grid').length){
-     document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('grid')[0]);
-    }
-
-    while(document.getElementById('frames').getElementsByClassName('fade').length>10){
-     document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('fade')[0]);
+    while(document.querySelectorAll('#frames img:not(.fade)').length){
+     document.getElementById('frames').removeChild(document.querySelectorAll('#frames img:not(.fade)')[0]);
     }
 
     insta.fade();
