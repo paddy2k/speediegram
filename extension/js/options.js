@@ -1,7 +1,7 @@
 var options = {
   init : function(){
     window.insta = opera.extension.bgProcess.insta;
-    var inputs = document.querySelectorAll('nav input[type=radio]');
+    var inputs = document.querySelectorAll('nav input');
     for(var i=0; inputs.length>i;i++){
       inputs[i].onclick=function(){
         document.getElementById('inner').className=this.id;
@@ -28,19 +28,22 @@ var options = {
       selects[i].value = widget.preferences[selects[i].id];
       selects[i].onchange=function(){
         widget.preferences[this.id] = this.value;
-        insta.cron();
+        insta.main();
       }
     }
     options.loadPhoto();
   },
 
   loadPhoto : function(){
-    document.getElementById('currentPhoto').src = insta.photos[0].images.low_resolution.url;
-    document.getElementById('currentUser').innerText = insta.photos[0].user.username;
-    document.getElementById('currentName').innerText = insta.photos[0].user.full_name;
-    document.getElementById('currentLikesValue').innerText = insta.photos[0].likes.count;
-    document.getElementById('currentCommentsValue').innerText = insta.photos[0].comments.count;
-    document.getElementById('quote').innerText = insta.photos[0].caption ? insta.photos[0].caption.text : '';
+    var activePhoto = opera.extension.bgProcess.document.querySelector('#frames img.grid:first-child, #frames img.stack:last-child, #frames img.fade:last-child');
+    var photo = JSON.parse(activePhoto.dataset.info);
+    
+    document.getElementById('currentPhoto').src = photo.images.low_resolution.url;
+    document.getElementById('currentUser').innerText = photo.user.username;
+    document.getElementById('currentName').innerText = photo.user.full_name;
+    document.getElementById('currentLikesValue').innerText = photo.likes.count;
+    document.getElementById('currentCommentsValue').innerText = photo.comments.count;
+    document.getElementById('quote').innerText = photo.caption ? photo.caption.text : '';
   }
 }
 window.addEventListener("load", options.init, false);

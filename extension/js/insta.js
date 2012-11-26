@@ -20,43 +20,51 @@ var insta = {
     document.body.removeAttribute('class');
     opera.contexts.speeddial.title="Speedie-gram";
     opera.contexts.speeddial.url=insta.photos[0].link;
+    
+    insta.timeout = setTimeout(insta.main, insta.prefs.gridInterval);
   },
 
-  stack : function(){
+  fadeStack : function(){
     clearTimeout(insta.timeout);
-    if(insta.photos.length>2){
-      var photo = insta.photos.shift();
+
+    var type = insta.prefs.layout;
+    var photo = insta.photos.shift();
+ 
+    var url = photo.images.low_resolution.url;
+    var img = document.createElement("IMG");
+    img.className=type+" hidden";
+    img.src = url;
+    img.dataset.info = JSON.stringify(photo);
+
+    if(type == 'stack'){
       var rotate  = (70*Math.random())-35;
       var tranX   = (50 *Math.random())-25;
       var tranY   = (10 *Math.random())-5;
       
-      var url = photo.images.low_resolution.url;
-      var img = document.createElement("IMG");
-      img.className="stack hidden";
-      img.src = url;
-      img.dataset.info = JSON.stringify(photo);
       img.style.transform="scale(1.2, 1.2) rotate("+rotate+"deg) translate("+tranX+"%, "+tranY+"%)";
-
-      var image = document.getElementById('frames').appendChild(img);
-      setTimeout(function(){
-        image.classList.remove('hidden');
-        opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
-        opera.contexts.speeddial.url = photo.link;
-
-        while(document.getElementById('frames').getElementsByClassName('stack').length>16){
-         document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('stack')[0]);
-        }
-
-        document.body.removeAttribute('class');
-      }, 1000);
     }
-    else{
-      insta.cron();
+    
+    var image = document.getElementById('frames').appendChild(img);
+    setTimeout(function(){
+      image.classList.remove('hidden');
+      opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
+      opera.contexts.speeddial.url = photo.link;
+
+      while(document.getElementById('frames').getElementsByClassName(type).length>16){
+        document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName(type)[0]);
+      }
+
+      document.body.removeAttribute('class');
+    }, 1000);
+
+    if(insta.photos.length<=2){
+      insta.main();
     }
-    insta.timeout = setTimeout(insta.stack, insta.prefs.stackInterval);
+    insta.timeout = setTimeout(insta.fadeStack, insta.prefs.stackInterval);
   },
 
-  prepStack : function(photos, page){
+  prepFS : function(photos, page){
+    var type = insta.prefs.layout;
     if(page > 1){
       insta.photos=[];
     }
@@ -65,60 +73,14 @@ var insta = {
       insta.photos.push(photos[i]);
     }
 
-    while(document.querySelectorAll('#frames img:not(.stack)').length){
-     document.getElementById('frames').removeChild(document.querySelectorAll('#frames img:not(.stack)')[0]);
+    while(document.querySelectorAll('#frames img:not(.'+type+')').length){
+     document.getElementById('frames').removeChild(document.querySelectorAll('#frames img:not(.'+type+')')[0]);
     }
 
-    insta.stack();
+    insta.fadeStack();
   },
 
-  fade : function(){
-    clearTimeout(insta.timeout);
-    if(insta.photos.length>2){
-      var photo = insta.photos.shift();
-      
-      var url = photo.images.low_resolution.url;
-      var img = document.createElement("IMG");
-      img.className="fade hidden";
-      img.src = url;
-      img.dataset.info = JSON.stringify(photo);
-      
-      var image = document.getElementById('frames').appendChild(img);
-      setTimeout(function(){
-        image.classList.remove('hidden');
-        opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
-        opera.contexts.speeddial.url = photo.link;
-        while(document.getElementById('frames').getElementsByClassName('fade').length>2){
-         document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('fade')[0]);
-        }
-
-        document.body.removeAttribute('class');
-      
-      }, 1000);
-    }
-    else{
-      insta.cron();
-    }
-    insta.timeout = setTimeout(insta.fade, insta.prefs.fadeInterval);
-  },
-
-  prepFade : function(photos, page){
-    if(page > 1){
-      insta.photos=[];
-    }
-
-    for(var i=0;photos.length>i;i++){
-      insta.photos.push(photos[i]);
-    }
-
-    while(document.querySelectorAll('#frames img:not(.fade)').length){
-     document.getElementById('frames').removeChild(document.querySelectorAll('#frames img:not(.fade)')[0]);
-    }
-
-    insta.fade();
-  },
-
-  cron : function(){
+  main : function(){
     clearTimeout(insta.timeout);
     var api_url = '';
     // Endpoint
@@ -145,13 +107,10 @@ var insta = {
         insta.get(api_url, insta.grid, 2);
         break;
       case 'stack':
-        insta.get(api_url, insta.prepStack, 2);
-        break;
       case 'fade':
-        insta.get(api_url, insta.prepFade, 2);
+        insta.get(api_url, insta.prepFS, 2);
         break;
     }
-    insta.timeout = setTimeout(insta.cron, insta.prefs.updateInterval);
   },
 
   get : function(url, callback, page){
@@ -176,7 +135,7 @@ var insta = {
     switch(m.action){
       case 'success':
         insta.prefs.token = m.access_token;
-        insta.cron();
+        insta.main();
         break;
       case 'error':
         console.log('auth error');
@@ -202,7 +161,7 @@ var insta = {
     }
 
     // Set Loading text
-    insta.cron();
+    insta.main();
   }
 }
 window.addEventListener("load", insta.init, false);

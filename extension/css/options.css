@@ -30,7 +30,7 @@ header{
 }
 #main{
   width:800px;
-  height:500px;
+  height:405px;
   border:1px solid blue;
   border-radius: 5px;
   margin: 20px auto;
@@ -71,7 +71,7 @@ nav li label {
   display:block;
   vertical-align: middle;
   color:#eee;
-  height: 100px;
+  height: 135px;
   text-decoration: none;
   font-weight:normal;
 }
@@ -93,17 +93,32 @@ nav li:last-child input:checked + div{
   border-bottom-left-radius: 10px;
 }
 nav li div.label-inner{
-  left:20px;
+  left:12px;
   top:35px;
   font-size:1.6em;
   position: relative;
 }
+nav li div.label-inner span{
+  display:inline-block;
+  top:-10px;
+  position:relative
+}
 nav li i{
-  width: 27px;
-  height: 22px;
+  width:52px;
+  height:50px;
   display: inline-block;
-  background-position: -6px -8px;
-  background-image: url("/assets/photo-page-assets.png");
+  background-size: 160px;
+  background-repeat: no-repeat;
+  background-image: url("/assets/icon_sprite.png");
+}
+nav li label[for=photo] i{
+  background-position: -48px 0px;
+}
+nav li label[for=feeds] i{
+  background-position: 4px 0px;
+}
+nav li label[for=info] i{
+  background-position: -108px 0px;
 }
 #inner > section{
   display: none;
@@ -204,6 +219,12 @@ blockquote p:first-letter {
 #currentUser{
   font-size: 2em;
   font-style:italic;
+  white-space: nowrap;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  margin-bottom:-8px;
 }
 #atSign{
   font-weight: 800;
@@ -229,15 +250,28 @@ blockquote p:first-letter {
     border: 0px solid #1C5380;
   }
   nav li div.label-inner{
-    left:13px;
-    top:23px;
+    left:5px;
+    top:32px;
     height:48px;
   }
   nav li label {
-    height: 71px
+    height: 119px;
   }
-  nav li label span{
+  nav li div.label-inner span{
     display: none;
+  }
+  nav li label i{
+    background-size: 145px;
+    width: 50px;
+  }
+  nav li label[for=photo] i{
+    background-position: -42px 0px;
+  }
+  nav li label[for=feeds] i{
+    background-position: 7px 0px;
+  }
+  nav li label[for=info] i{
+    background-position: -96px 0px;
   }
   #inner{
     width:85%;
@@ -266,6 +300,7 @@ blockquote p:first-letter {
     display: none;
   }
   #currentUser{
+    width: 88%;
     font-size: 1.5em;
   }
   #atSign{
