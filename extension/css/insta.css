@@ -77,10 +77,11 @@ img.stack{
   transition:all 0.5s ease-out;
   display:block;
   height:100%;
-  margin:auto;
   opacity: 1;
   padding: 1.8%;
   background-color: #FFFFFF;
+  position:absolute;
+  left:25%;
 }
 
 img.stackHidden{

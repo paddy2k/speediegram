@@ -25,7 +25,7 @@ var insta = {
     clearTimeout(insta.timeout);
     if(insta.photos.length>2){
       var photo = insta.photos.shift();
-      var rotate  = (100*Math.random())-50;
+      var rotate  = (90*Math.random())-45;
       var tranX   = (56 *Math.random())-28;
       var tranY   = (20 *Math.random())-10;
       
@@ -44,19 +44,21 @@ var insta = {
     else{
       insta.cron();
     }
-    insta.timeout = setTimeout(insta.stack, 1000);
+    insta.timeout = setTimeout(insta.stack, insta.prefs.stackInterval);
   },
 
   prepStack : function(photos){
+    insta.photos=[];
     for(var i=0;photos.length>i;i++){
       insta.photos.push(photos[i]);
     }
 
-    var imgs = document.getElementById('frames').childNodes;
-    for(var i=0;imgs.length>i;i++){
-      if(imgs[i].className != 'stack' || i>5){
-        document.getElementById('frames').removeChild(imgs[i]);
-      }
+    while(document.getElementById('frames').getElementsByClassName('grid').length){
+     document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('grid')[0]);
+    }
+
+    while(document.getElementById('frames').getElementsByClassName('stack').length>10){
+     document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('stack')[0]);
     }
 
     insta.stack();
