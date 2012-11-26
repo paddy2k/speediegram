@@ -72,7 +72,6 @@ body.loading #logo{
 	display: none;
 }
 
-
 img.stack{
   transition:all 0.5s ease-in;
   display:block;
@@ -84,7 +83,26 @@ img.stack{
   left:25%;
 }
 
-img.stackHidden{
+img.stack.hidden{
   transform: scale(5, 5) rotate(20deg) translate(0px, 0px) !important;
+}
+
+img.hidden{
   opacity: 0 !important;
+}
+
+img.fade{
+  transition:all 0.8s linear;
+  display:block;
+  width:100%;
+  opacity: 1;
+  position:absolute;
+  top:-25%;
+  animation:fadeAni 5s linear;
+  animation-iteration-count:-1;
+}
+
+@keyframes fadeAni {
+  from { top:-5%; width:100%; }
+  to { top:-45%; width:120%; }
 }

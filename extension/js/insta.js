@@ -31,11 +31,11 @@ var insta = {
       
       var url = photo.images.low_resolution.url;
       var img = document.createElement("IMG");
-      img.className="stack stackHidden";
+      img.className="stack hidden";
       img.src = url;
       img.style.transform="scale(1, 1) rotate("+rotate+"deg) translate("+tranX+"%, "+tranY+"%)";
       var image = document.getElementById('frames').appendChild(img).classList;
-      setTimeout(function(){image.remove('stackHidden')}, 0);
+      setTimeout(function(){image.remove('hidden')}, 0);
       
       document.body.removeAttribute('class');
       opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
@@ -47,8 +47,11 @@ var insta = {
     insta.timeout = setTimeout(insta.stack, insta.prefs.stackInterval);
   },
 
-  prepStack : function(photos){
-    insta.photos=[];
+  prepStack : function(photos, page){
+    if(page > 1){
+      insta.photos=[];
+    }
+
     for(var i=0;photos.length>i;i++){
       insta.photos.push(photos[i]);
     }
@@ -62,6 +65,48 @@ var insta = {
     }
 
     insta.stack();
+  },
+
+  fade : function(){
+    clearTimeout(insta.timeout);
+    if(insta.photos.length>2){
+      var photo = insta.photos.shift();
+      
+      var url = photo.images.low_resolution.url;
+      var img = document.createElement("IMG");
+      img.className="fade hidden";
+      img.src = url;
+      var image = document.getElementById('frames').appendChild(img).classList;
+      setTimeout(function(){image.remove('hidden')}, 0);
+      
+      document.body.removeAttribute('class');
+      opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
+      opera.contexts.speeddial.url = photo.link;
+    }
+    else{
+      insta.cron();
+    }
+    insta.timeout = setTimeout(insta.fade, insta.prefs.fadeInterval);
+  },
+
+  prepFade : function(photos, page){
+    if(page > 1){
+      insta.photos=[];
+    }
+
+    for(var i=0;photos.length>i;i++){
+      insta.photos.push(photos[i]);
+    }
+
+    while(document.getElementById('frames').getElementsByClassName('grid').length){
+     document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('grid')[0]);
+    }
+
+    while(document.getElementById('frames').getElementsByClassName('fade').length>10){
+     document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName('fade')[0]);
+    }
+
+    insta.fade();
   },
 
   cron : function(){
@@ -91,10 +136,10 @@ var insta = {
         insta.get(api_url, insta.grid, 2);
         break;
       case 'stack':
-        insta.get(api_url, insta.prepStack, 1);
+        insta.get(api_url, insta.prepStack, 2);
         break;
       case 'fade':
-        insta.get(api_url, insta.fade, 1);
+        insta.get(api_url, insta.prepFade, 2);
         break;
     }
     insta.timeout = setTimeout(insta.cron, insta.prefs.updateInterval);
