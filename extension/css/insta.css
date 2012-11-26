@@ -17,6 +17,7 @@ body{
 }
 #frames{
   width:101%;
+  height:100%;
   text-align: center;
 }
 #frames img.grid{
@@ -75,35 +76,14 @@ body.loading #logo{
 img.stack{
   transition:all 0.5s ease-out;
   display:block;
-  position: absolute;
   height:100%;
-  transform: scale(4, 4) rotate(20deg) translate(0px, 10px);
-  opacity: 0;
+  margin:auto;
+  opacity: 1;
   padding: 1.8%;
   background-color: #FFFFFF;
 }
 
-img.stack.dropA{
-  transform: scale(1.1, 1.1) rotate(4deg) translate(-7px, 19px);
-  opacity: 1;
-}
-img.stack.dropB{
-  transform: scale(1.1, 1.1) rotate(14deg) translate(7px, 19px);
-  opacity: 1;
-}
-img.stack.dropC{
-  transform: scale(1.1, 1.1) rotate(-8deg) translate(8px, 3px);
-  opacity: 1;
-}
-img.stack.dropD{
-  transform: scale(1.1, 1.1) rotate(9deg) translate(7px, -4px);
-  opacity: 1;
-}
-img.stack.dropE{
-  transform: scale(1.1, 1.1) rotate(2deg) translate(2px, 6px);
-  opacity: 1;
-}
-img.stack.dropF{
-  transform: scale(1.1, 1.1) rotate(-7deg) translate(-10px, 4px);
-  opacity: 1;
+img.stackHidden{
+  transform: scale(5, 5) rotate(20deg) translate(0px, 0px) !important;
+  opacity: 0 !important;
 }

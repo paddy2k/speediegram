@@ -20,23 +20,48 @@ var insta = {
     opera.contexts.speeddial.title="Speedie-gram";
     opera.contexts.speeddial.url=insta.photos[0].link;
   },
-  stack : function(photos, page){
-    if(page == 2){
-      insta.photos=[];
-    }
-    for(var i=0;photos.length>i;i++){
-      var url = photos[i].images.low_resolution.url;
+
+  stack : function(){
+    clearTimeout(insta.timeout);
+    if(insta.photos.length>2){
+      var photo = insta.photos.shift();
+      var rotate  = (100*Math.random())-50;
+      var tranX   = (56 *Math.random())-28;
+      var tranY   = (20 *Math.random())-10;
+      
+      var url = photo.images.low_resolution.url;
       var img = document.createElement("IMG");
-      img.className="stack";
+      img.className="stack stackHidden";
       img.src = url;
-      document.getElementById('frames').appendChild(img);
+      img.style.transform="scale(1, 1) rotate("+rotate+"deg) translate("+tranX+"%, "+tranY+"%)";
+      var image = document.getElementById('frames').appendChild(img).classList;
+      setTimeout(function(){image.remove('stackHidden')}, 0);
+      
+      document.body.removeAttribute('class');
+      opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
+      opera.contexts.speeddial.url = photo.link;
+    }
+    else{
+      insta.cron();
+    }
+    insta.timeout = setTimeout(insta.stack, 1000);
+  },
+
+  prepStack : function(photos){
+    for(var i=0;photos.length>i;i++){
       insta.photos.push(photos[i]);
     }
 
-    document.body.removeAttribute('class');
-    opera.contexts.speeddial.title=insta.photos[0].caption.text;
-    opera.contexts.speeddial.url=insta.photos[0].link;
+    var imgs = document.getElementById('frames').childNodes;
+    for(var i=0;imgs.length>i;i++){
+      if(imgs[i].className != 'stack' || i>5){
+        document.getElementById('frames').removeChild(imgs[i]);
+      }
+    }
+
+    insta.stack();
   },
+
   cron : function(){
     clearTimeout(insta.timeout);
     var api_url = '';
@@ -62,19 +87,9 @@ var insta = {
     switch(insta.prefs.layout){
       case 'grid':
         insta.get(api_url, insta.grid, 2);
-        
         break;
       case 'stack':
-        insta.get(api_url, insta.stack, 1);
-        // insta.interval = setInterval(function(){
-        //   if(insta.photos.length){
-        //     var photo = insta.photos.shift();
-        //     // etc
-        //   }
-        //   else{
-        //     insta.get(api_url, insta.stack, 1);
-        //   }
-        // });
+        insta.get(api_url, insta.prepStack, 1);
         break;
       case 'fade':
         insta.get(api_url, insta.fade, 1);
