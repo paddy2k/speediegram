@@ -97,6 +97,9 @@ nav li div.label-inner{
   top:35px;
   font-size:1.6em;
   position: relative;
+  width:142px;
+  height:70px;
+  cursor: pointer;
 }
 nav li div.label-inner span{
   display:inline-block;
@@ -125,10 +128,23 @@ nav li label[for=info] i{
 }
 #inner.photo #photo,
 #inner.feeds #feeds,
-#inner.prefs #prefs,
-#inner.info #info,
-#inner.help #help{
+#inner.info #info{
   display: block;
+  overflow: auto;
+  height:375px;
+}
+#inner.info #info h2{
+  color:#555;
+}
+#inner.info #info{
+  color:#666;
+}
+#inner a{
+ color:#444;
+ text-decoration: none;
+} 
+#inner a{
+ color:#222;
 }
 article{
   padding:10px;
@@ -141,9 +157,9 @@ article{
 }
 article > div{}
 #currentDetails{
-  float:left
-;  padding-left: 15px;
-  height:177px;
+  float:left;
+  clear:both;
+  height:55px;
   width:67%;
 }
 #currentComments,
@@ -202,7 +218,7 @@ article > div{}
   height:105px;
 }
 blockquote {
-  margin: 1em 2em;
+  margin: 0.5em 2em;
   border-left: 1px dashed #999;
   padding-left: 1em;
 }
@@ -212,6 +228,9 @@ blockquote p:first-letter {
   font-family: "Monotype Corsiva", "Apple Chancery", fantasy;
   font-size: 220%;
   font-weight: bold;
+}
+#currentButton{
+  margin-top:55px;
 }
 #currentQuote{
   clear:both;
@@ -253,6 +272,7 @@ blockquote p:first-letter {
     left:5px;
     top:32px;
     height:48px;
+    width:55px;
   }
   nav li label {
     height: 119px;
@@ -279,13 +299,24 @@ blockquote p:first-letter {
     margin-left: -10px;
     padding-left: 12px;
     background: url("/assets/body_noise_media.png") 50% 0px #E3E8EC;
-    padding: 5px;
+    padding: 13px;
+  }
+  article{
+    padding: 0px;
+  }
+  #inner section{
+    height:345px !important;
   }
   #currentDetails{
-    width: 49%;
+    width: 100%;
   }
   #currentNames{
     height: 52px;
+  }
+  #currentButton{
+    margin-top: 25px;
+    width:53%;
+    float: right;
   }
   #currentLikes,
   #currentComments{
