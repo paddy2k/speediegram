@@ -11,7 +11,7 @@ body{
 	background: url("/assets/body_noise_media.png") 50% 0px #E3E8EC;
 }
 header{
-  background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.25));
+  background-image: linear-gradient(rgba(247, 246, 246, 0.8), rgba(247, 246, 246, 0.2));
   box-shadow: 0px 0px 2px #888;
 }
 #logo-holder{
