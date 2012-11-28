@@ -38,14 +38,18 @@ header{
   display: flex;
   flex-flow: row;
 }
+#feedOptions,
+nav{
+  border: 1px solid #1C5380;
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.102), inset 1px 0px 0px rgba(255, 255, 255, 0.047), 0px 1px 3px rgba(0, 0, 0, 0.149), -2px 0px 2px rgba(0, 0, 0, 0.102);
+}
+#feedOptions ul,
 nav{
   width:20%;
   height:100%;
   background-color: #5F8CB0;
   background-image: url("/assets/noise-2.png"), -o-linear-gradient(left, #4A7496, #5F8CB0);
   background-position: 50% 50%;
-  border: 1px solid #1C5380;
-  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.102), inset 1px 0px 0px rgba(255, 255, 255, 0.047), 0px 1px 3px rgba(0, 0, 0, 0.149), -2px 0px 2px rgba(0, 0, 0, 0.102);
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
@@ -56,7 +60,7 @@ nav{
   border-bottom-right-radius: 10px;
   padding: 15px;
 }
-nav ul{
+ul{
   list-style:none;
   margin:0px;
   padding:0px;
@@ -80,7 +84,7 @@ nav li div{
   height:100%;
   width: 100%;
 }
-nav li input{
+input[type=radio]{
   display: none;
 }
 nav li input:checked + div{
@@ -106,11 +110,11 @@ nav li div.label-inner span{
   top:-10px;
   position:relative
 }
-nav li i{
+li i{
   width:52px;
   height:50px;
   display: inline-block;
-  background-size: 160px;
+  background-size: 272px;
   background-repeat: no-repeat;
   background-image: url("/assets/icon_sprite.png");
 }
@@ -189,7 +193,8 @@ article > div{}
   display: block;
   position: relative;
   top:-24px;
-  right:-14px;  
+  right:-40px; 
+  width: 80px;
 }
 #currentLikes i,
 #currentComments i{
@@ -200,7 +205,7 @@ article > div{}
   background-image: url("/assets/photo-page-assets.png");
   display: block;
   position: relative;
-  right:-34px;
+  right:-14px;
 }
 #currentLikes i{
   background-position: -6px -8px;
@@ -251,6 +256,108 @@ blockquote p:first-letter {
   font-size: 1.6em;
   margin-right: 2px; 
 }
+#feeds{
+  color:#444;
+}
+#feeds h2{
+  margin-bottom:15px;
+}
+#layouts{
+  cursor: pointer;
+  margin: auto;
+  border-spacing: 0px;
+}
+#layouts tr:first-child td{
+  background-image:url(/assets/grid.png);
+  height:113px;
+  width:180px;
+  background-size:cover;
+  box-shadow: inset 0px 0px 14px #333333;
+}
+#layouts tr:first-child td:first-child{
+  background-image:url(/assets/stack.png);
+  border-radius: 10px 0px 0px 10px;
+}
+#layouts tr:first-child td:last-child{
+  background-image:url(/assets/fade.png);
+  border-radius: 0px 10px 10px 0px;
+}
+#layouts tr:last-child{
+  text-align: center;
+  color:#666;
+}
+#layouts label{
+  width: 180px;
+  height: 112px;
+  display:block;
+  background-color: rgba(0,0,0,0.5);
+}
+#layouts tr:first-child td:first-child label{
+  border-radius: 10px 0px 0px 10px;
+}
+#layouts tr:first-child td:last-child label{
+  border-radius: 0px 10px 10px 0px;
+}
+#layouts label:hover,
+#layouts input:checked + label{
+  background-color: rgba(0,0,0,0.0);
+}
+#timerHolder{
+  margin: 10px auto;
+  width: 324px;
+}
+#feedOptions{
+  border: 1px solid #999;
+  margin: auto;
+  width: 540px;
+  border-radius: 10px;
+}
+#feedOptions li{
+  margin: auto;
+}
+#feedOptions ul{
+  border-radius: 10px 10px 0px 0px;
+  height: 45px;
+  width: 100%;
+  display: flex;
+  flex-flow: row;
+}
+#feedOptions i{
+  height: 22px;
+  width: 30px;
+  top: 5px;
+  position: relative;
+}
+#feedOptions label{
+  width:134px;
+  height:40px;
+  cursor: pointer;
+}
+#feedOptions label[for=me] i{
+  background-position: -210px -2px;
+}
+#feedOptions label[for=tags] i{
+  background-position: -158px -2px;
+}
+#feedOptions label[for=geo] i{
+  width: 28px;
+  background-position: -184px -1px;
+}
+#feedOptions label[for=popular] i{
+  background-position: -240px -2px;
+}
+
+#feedOptions label div{
+  text-align: center;
+  color:#eee;
+  width:134px;
+}
+#feedOptions li{
+  border-left: 1px solid #1C5380;
+}
+#feedOptions li:first-child{
+  border-left: 0px solid #1C5380;
+}
 @media all and (max-width: 500px) {
   body{
     background: inherit;
@@ -281,7 +388,7 @@ blockquote p:first-letter {
     display: none;
   }
   nav li label i{
-    background-size: 145px;
+    background-size: 250px;
     width: 50px;
   }
   nav li label[for=photo] i{
@@ -337,5 +444,21 @@ blockquote p:first-letter {
   #atSign{
     font-size: 1.2em;
     margin-right: 3px; 
+  }
+  .seconds{
+    display: none;
+  }
+  #layouts td,
+  #layouts td label{
+    width: 130px;  
+  }
+  #feedOptions{
+    width: 392px;
+  }
+  #feedOptions label div{
+    width: 90px;
+  }
+  #feeds h2{
+    display: none;
   }
 }

@@ -81,30 +81,95 @@
           </article>
         </section>
         <section id="feeds">
-          <p>
-            Search Tag: <input type="text" value="" id="searchTag">
-          </p>
-          <p>
-            Feeds: <select id="feed">
-              <option value="me">Me</options>
-              <option value="tags">Tags</options>
-              <option value="geo">Geo</options>
-              <option value="popular">Popular</options>
-            </select>
-          </p>
-          <p>
-            Update Interval: <input type="tel" value="" id="gridInterval">
-          </p>
-          <p>
-            Stack Update Interval: <input type="tel" value="" id="stackInterval">
-          </p>
-          <p>
-            Layout: <select id="layout">
-              <option value="grid">Grid</options>
-              <option value="stack">Stack</options>
-              <option value="fade">Fade</options>
-            </select>
-          </p>
+          <form>
+            <h2>Feed Options</h2>
+            <table id="layouts">
+              <tbody>
+                <tr>
+                  <td>
+                    <input id="stack" value="stack" type="radio" name="layout">
+                    <label for="stack"></label>
+                  </td>
+                  <td>
+                    <input id="grid" value="grid" type="radio" name="layout">
+                    <label for="grid"></label>
+                  </td>
+                  <td>
+                    <input id="fade" value="fade" type="radio" name="layout">
+                    <label for="fade"></label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Stack</td>
+                  <td>Grid</td>
+                  <td>Fade</td>
+                </tr>
+              </tbody>
+            </table>
+            <div id="timerHolder">
+              <strong>Timer:</strong> <input id="timer" type="range" name="" min="1" max="600"/>
+              <output onforminput="value=timer.value" for="timer" id="timerOutput">0</output><span class="seconds"> </span>sec<span class="seconds">onds</span>
+            </div>
+            <div id="feedOptions">
+              <ul>
+                <li>
+                  <label for="me">
+                    <input name="feed" id="me" type="radio"/>
+                    <div class="label">
+                      <div class="label-inner">
+                        <i></i>
+                        <div>Me</div>
+                      </div>
+                    </div>
+                  </label>
+                </li>
+                <li>
+                  <label for="tags">
+                    <input name="feed" id="tags" type="radio"/>
+                    <div class="label">
+                      <div class="label-inner">
+                        <i></i>
+                        <div>Search</div>
+                      </div>
+                    </div>
+                  </label>
+                </li>
+                <li>
+                  <label for="geo">
+                    <input name="feed" id="geo" type="radio"/>
+                    <div class="label">
+                      <div class="label-inner">
+                        <i></i>
+                        <div>Localtion</div>
+                      </div>
+                    </div>
+                  </label>
+                </li>
+                <li>
+                  <label for="popular">
+                    <input name="feed" id="popular" type="radio"/>
+                    <div class="label">
+                      <div class="label-inner">
+                        <i></i>
+                        <div>Popular</div>
+                      </div>
+                    </div>
+                  </label>
+                </li>
+              </ul>
+              <p>
+                Search Tag: <input type="text" value="" id="searchTag">
+              </p>
+              <p>
+                Feeds: <select id="feed">
+                  <option value="me">Me</options>
+                  <option value="tags">Tags</options>
+                  <option value="geo">Geo</options>
+                  <option value="popular">Popular</options>
+                </select>
+              </p>
+            </div>
+          </form>
         </section>
         <section id="info">
           <h2>About Speedie-gram</h2>

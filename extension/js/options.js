@@ -9,17 +9,46 @@ var options = {
           case 'photo':
             options.loadPhoto();
             break;
-          case 'prefs':
+          case 'feeds':
+            document.getElementsByTagName('output')[0].value = document.getElementById('timer').value;
             break;
         }
       }
     }
 
-    var inputs = document.querySelectorAll('#inner input');
+    var timer = document.getElementById('timer');
+    timer.name = widget.preferences.layout + 'Interval';
+    timer.max = widget.preferences.layout == 'grid' ? 600 : 30 ;
+    timer.value = widget.preferences[timer.name];
+
+    // Update Output
+    document.getElementById('timerOutput').value = widget.preferences[timer.name];
+
+    var inputs = document.querySelectorAll('#feeds input');
     for(var i=0; inputs.length>i;i++){
-      inputs[i].value = widget.preferences[inputs[i].id];
+      // Add onchange event
       inputs[i].onchange=function(){
-        widget.preferences[this.id] = this.value;
+        widget.preferences[this.name] = this.value;
+        if(this.name=='layout'){
+          var timer = document.getElementById('timer');
+          timer.name = this.value + 'Interval';
+          timer.max = this.value == 'grid' ? 600 : 30 ;
+          timer.value = widget.preferences[timer.name];
+
+          // Update Output
+          document.getElementById('timerOutput').value = widget.preferences[timer.name];
+        }
+        insta.main();
+      }
+
+      var currentValue = widget.preferences[inputs[i].name];
+      if(inputs[i].type=='radio'){
+        if(inputs[i].id==currentValue){
+          inputs[i].checked="checked";
+        }
+      }
+      else{
+        inputs[i].value = widget.preferences[inputs[i].name];
       }
     }
 

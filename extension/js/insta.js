@@ -21,7 +21,7 @@ var insta = {
     opera.contexts.speeddial.title="Speedie-gram";
     opera.contexts.speeddial.url=insta.photos[0].link;
     
-    insta.timeout = setTimeout(insta.main, insta.prefs.gridInterval);
+    insta.timeout = setTimeout(insta.main, insta.prefs.gridInterval*1000);
   },
 
   fadeStack : function(){
@@ -60,7 +60,7 @@ var insta = {
     if(insta.photos.length<=2){
       insta.main();
     }
-    insta.timeout = setTimeout(insta.fadeStack, insta.prefs.stackInterval);
+    insta.timeout = setTimeout(insta.fadeStack, insta.prefs[type+'Interval']*1000);
   },
 
   prepFS : function(photos, page){
@@ -83,7 +83,7 @@ var insta = {
   main : function(){
     clearTimeout(insta.timeout);
     var api_url = '';
-    // Endpoint
+    // Select Endpoint
     switch(insta.prefs.feed){
       case 'tags':
         api_url = "tags/"+insta.prefs.searchTag+"/media/recent?"; 
@@ -100,6 +100,11 @@ var insta = {
         break;
     }
     api_url = insta.prefs.apiEndpoint + api_url + 'access_token=' + insta.prefs.token;
+
+    // If no auth token returned default to popular feed.
+    if(!insta.prefs.token || insta.prefs.token==''){
+      api_url = insta.prefs.apiEndpoint + "media/popular?client_id" + insta.prefs.client_id;
+    }
     
     // Layout
     switch(insta.prefs.layout){
