@@ -29,36 +29,38 @@ var insta = {
 
     var type = insta.prefs.layout;
     var photo = insta.photos.shift();
- 
-    var url = photo.images.low_resolution.url;
-    var img = document.createElement("IMG");
-    img.className=type+" hidden";
-    img.src = url;
-    img.dataset.info = JSON.stringify(photo);
 
-    if(type == 'stack'){
-      var rotate  = (70*Math.random())-35;
-      var tranX   = (50 *Math.random())-25;
-      var tranY   = (10 *Math.random())-5;
-      
-      img.style.transform="scale(1.2, 1.2) rotate("+rotate+"deg) translate("+tranX+"%, "+tranY+"%)";
-    }
-    
-    var image = document.getElementById('frames').appendChild(img);
-    setTimeout(function(){
-      image.classList.remove('hidden');
-      opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
-      opera.contexts.speeddial.url = photo.link;
+    if(photo){   
+      var url = photo.images.low_resolution.url;
+      var img = document.createElement("IMG");
+      img.className=type+" hidden";
+      img.src = url;
+      img.dataset.info = JSON.stringify(photo);
 
-      while(document.getElementById('frames').getElementsByClassName(type).length>16){
-        document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName(type)[0]);
+      if(type == 'stack'){
+        var rotate  = (70*Math.random())-35;
+        var tranX   = (50 *Math.random())-25;
+        var tranY   = (10 *Math.random())-5;
+        
+        img.style.transform="scale(1.2, 1.2) rotate("+rotate+"deg) translate("+tranX+"%, "+tranY+"%)";
       }
+      
+      var image = document.getElementById('frames').appendChild(img);
+      setTimeout(function(){
+        image.classList.remove('hidden');
+        opera.contexts.speeddial.title = photo.caption ? photo.caption.text : photo.user.username;
+        opera.contexts.speeddial.url = photo.link;
 
-      document.body.removeAttribute('class');
-    }, 1000);
+        while(document.getElementById('frames').getElementsByClassName(type).length>16){
+          document.getElementById('frames').removeChild(document.getElementById('frames').getElementsByClassName(type)[0]);
+        }
 
-    if(insta.photos.length<=2){
-      insta.main();
+        document.body.removeAttribute('class');
+      }, 1000);
+
+      if(insta.photos.length<=2){
+        insta.main();
+      }
     }
     insta.timeout = setTimeout(insta.fadeStack, insta.prefs[type+'Interval']*1000);
   },

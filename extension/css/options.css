@@ -231,6 +231,8 @@ blockquote {
   display: inline-block;
   max-height:120px;
   overflow-y: auto;
+  max-width: 510px;
+  word-wrap: break-word;
 }
 blockquote p:first-letter {
   float: left;
@@ -519,5 +521,8 @@ div.feedOption{
   }
   #feeds h2{
     display: none;
+  }
+  blockquote{
+    max-width:312px;
   }
 }
