@@ -8,3 +8,5 @@ Speedie-gram features multiple animated transitions including:
 * grid
 * stack
 * fade
+
+https://addons.opera.com/en-gb/extensions/details/speedie-gram/
