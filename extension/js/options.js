@@ -11,6 +11,8 @@ var options = {
             break;
           case 'feeds':
             document.getElementsByTagName('output')[0].value = document.getElementById('timer').value;
+            document.getElementById('feedOptions').className=widget.preferences.feed;
+            options.loadMap();
             break;
         }
       }
@@ -38,11 +40,14 @@ var options = {
           // Update Output
           document.getElementById('timerOutput').value = widget.preferences[timer.name];
         }
+        document.getElementById('feedOptions').className=widget.preferences.feed;
+        options.loadMap();
         insta.main();
       }
 
       var currentValue = widget.preferences[inputs[i].name];
       if(inputs[i].type=='radio'){
+        console.log(inputs[i].id +'_'+currentValue);
         if(inputs[i].id==currentValue){
           inputs[i].checked="checked";
         }
@@ -50,6 +55,7 @@ var options = {
       else{
         inputs[i].value = widget.preferences[inputs[i].name];
       }
+      console.log(inputs[i]);
     }
 
     var selects = document.querySelectorAll('#inner select, #inner input[id=searchTag]');
@@ -61,6 +67,39 @@ var options = {
       }
     }
     options.loadPhoto();
+  },
+
+  loadMap : function() {
+    if(widget.preferences.feed != 'geo'){
+      return false;
+    }
+
+    var pinLatlng = new google.maps.LatLng(parseFloat(widget.preferences.geoLat), parseFloat(widget.preferences.geoLng));
+    var mapOptions = {
+      zoom: 15,
+      center: pinLatlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    
+    var image = new google.maps.MarkerImage("/assets/Instagram-logo-32.png",
+       new google.maps.Size(32, 44),
+       new google.maps.Point(0,0),
+       new google.maps.Point(13, 44));
+    window.map = new google.maps.Map(document.getElementById('geoOptions'), mapOptions);
+    window.marker = new google.maps.Marker({
+        position : pinLatlng,
+        map : map,
+        icon: image,
+        draggable : true
+    });
+
+    google.maps.event.addListener(marker, "dragend", function(e, f, g) {
+        var latLng = e.latLng.toUrlValue().split(',');
+        widget.preferences.geoLat = latLng[0];
+        widget.preferences.geoLng = latLng[1];
+        map.panTo(e.latLng);
+        insta.main();
+    });
   },
 
   loadPhoto : function(){

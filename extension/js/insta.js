@@ -83,29 +83,28 @@ var insta = {
   main : function(){
     clearTimeout(insta.timeout);
     var api_url = '';
+
+    // If no auth token returned default to popular feed.
+    var feed = insta.prefs.token && insta.prefs.token.length ? insta.prefs.feed : 'popular';
+
     // Select Endpoint
-    switch(insta.prefs.feed){
+    switch(feed){
       case 'tags':
-        api_url = "tags/"+insta.prefs.searchTag+"/media/recent?"; 
-        break;
-      case 'popular':
-        api_url = "media/popular?";
+        api_url = "tags/"+  insta.prefs.searchTag.replace('/\s/','') + "/media/recent?"; 
         break;
       case 'geo':
-        api_url = "media/search?lat=48.858844&lng=2.294351&"; 
+        api_url = "media/search?lat="+insta.prefs.geoLat+"&lng="+insta.prefs.geoLng+"&"; 
         break;
       case 'me':
-      default:
         api_url = "users/self/feed?"; 
+        break;
+      default:
+      case 'popular':
+        api_url = "media/popular?";
         break;
     }
     api_url = insta.prefs.apiEndpoint + api_url + 'access_token=' + insta.prefs.token;
 
-    // If no auth token returned default to popular feed.
-    if(!insta.prefs.token || insta.prefs.token==''){
-      api_url = insta.prefs.apiEndpoint + "media/popular?client_id" + insta.prefs.client_id;
-    }
-    
     // Layout
     switch(insta.prefs.layout){
       case 'grid':
@@ -127,7 +126,7 @@ var insta = {
       if(this.readyState===4){
         var feed = JSON.parse(this.response);
         callback(feed.data, page--);
-        if(page>0){
+        if(page>0 && feed.pagination){
           _this.get(feed.pagination.next_url, callback, false);
         }
       }

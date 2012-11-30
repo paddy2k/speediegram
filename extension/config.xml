@@ -11,6 +11,9 @@
 
   <access origin="https://instagram.com" subdomains="true"/>
   <access origin="http://amazonaws.com" subdomains="true"/>
+  <access origin="https://google.com" subdomains="true"/>
+  <access origin="https://gstatic.com" subdomains="true"/>
+  <access origin="https://googleapis.com" subdomains="true"/>
   <access origin="http://paddy2k.github.com"/>
 
   <preference name="apiEndpoint" value="https://api.instagram.com/v1/"/>
@@ -24,6 +27,8 @@
   <preference name="feed" value="me"/>
   <preference name="searchTag" value="guinness"/>
   <preference name="layout" value="fade"/>
+  <preference name="geoLat" value="48.858844"/>
+  <preference name="geoLng" value="2.294351"/>
 
   <author href="https://twitter.com/paddy2k">paddy2k</author>
 

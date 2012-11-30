@@ -18,21 +18,24 @@ header{
   width:800px;
   margin:auto;
   padding-top: 5px;  
+  height:45px;
 }
 #logo-holder img{
-  padding-left:4px
+  padding-left:4px;
+  height:40px;
 }
 #forkMe{
   position: absolute;
   top: 58px;
   right: 0;
   border: 0;
+  top: 50px;
 }
 #main{
   width:800px;
   height:405px;
   border:1px solid blue;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 20px auto;
   border: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
@@ -87,7 +90,7 @@ nav li div{
 input[type=radio]{
   display: none;
 }
-nav li input:checked + div{
+input:checked + div{
   background-color: rgba(0,0,0,0.4);
 }
 nav li:first-child input:checked + div{
@@ -134,7 +137,6 @@ nav li label[for=info] i{
 #inner.feeds #feeds,
 #inner.info #info{
   display: block;
-  overflow: auto;
   height:375px;
 }
 #inner.info #info h2{
@@ -226,6 +228,9 @@ blockquote {
   margin: 0.5em 2em;
   border-left: 1px dashed #999;
   padding-left: 1em;
+  display: inline-block;
+  max-height:120px;
+  overflow-y: auto;
 }
 blockquote p:first-letter {
   float: left;
@@ -290,7 +295,7 @@ blockquote p:first-letter {
   width: 180px;
   height: 112px;
   display:block;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.7);
 }
 #layouts tr:first-child td:first-child label{
   border-radius: 10px 0px 0px 10px;
@@ -311,6 +316,8 @@ blockquote p:first-letter {
   margin: auto;
   width: 540px;
   border-radius: 10px;
+  height: 155px;
+  overflow: hidden;
 }
 #feedOptions li{
   margin: auto;
@@ -332,6 +339,7 @@ blockquote p:first-letter {
   width:134px;
   height:40px;
   cursor: pointer;
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.102), inset 1px 0px 0px rgba(255, 255, 255, 0.047), 0px 1px 3px rgba(0, 0, 0, 0.149), -2px 0px 2px rgba(0, 0, 0, 0.102);
 }
 #feedOptions label[for=me] i{
   background-position: -210px -2px;
@@ -358,6 +366,51 @@ blockquote p:first-letter {
 #feedOptions li:first-child{
   border-left: 0px solid #1C5380;
 }
+div.feedOption{
+  display: none;
+}
+#geoOptions{
+  height:110px;
+  width:100%;
+}
+
+#meOptions,
+#tagsOptions,
+#popularOptions{
+  margin:10px;
+}
+
+#tagsOptions  *{
+  font-weight: 700;
+  font-size: 20px;
+}
+
+#tagsOptions{
+  text-align: center;
+}
+
+#tagsOptions p{
+  margin-top: 30px;
+}
+#tagsOptions #searchTag{
+  padding: 5px 5px 5px 20px;
+}
+
+#hashChar{
+  display:inline-block;
+  position:relative;
+  left:13px;
+  top:1px;
+  width:0px;
+}
+
+#feedOptions.geo #geoOptions,
+#feedOptions.me #meOptions,
+#feedOptions.tags #tagsOptions,
+#feedOptions.popular #popularOptions{
+  display: block;
+}
+
 @media all and (max-width: 500px) {
   body{
     background: inherit;
@@ -456,7 +509,13 @@ blockquote p:first-letter {
     width: 392px;
   }
   #feedOptions label div{
-    width: 90px;
+    width: 97px;
+  }
+  #feedOptions li:first-child label div{
+    border-top-left-radius:10px;
+  }
+  #feedOptions li:last-child label div{
+    border-top-right-radius:10px;
   }
   #feeds h2{
     display: none;

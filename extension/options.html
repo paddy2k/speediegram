@@ -3,6 +3,7 @@
   <head>
     <title>Speedie-gram</title>
     <script src="js/options.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <link rel="stylesheet" href="css/options.css">
     <meta charset=utf-8 />
   </head>
@@ -114,60 +115,60 @@
               <ul>
                 <li>
                   <label for="me">
-                    <input name="feed" id="me" type="radio"/>
+                    <input name="feed" id="me" type="radio" value="me"/>
                     <div class="label">
-                      <div class="label-inner">
-                        <i></i>
-                        <div>Me</div>
-                      </div>
+                      <i></i>
+                      <div>Me</div>
                     </div>
                   </label>
                 </li>
                 <li>
                   <label for="tags">
-                    <input name="feed" id="tags" type="radio"/>
+                    <input name="feed" id="tags" type="radio" value="tags"/>
                     <div class="label">
-                      <div class="label-inner">
-                        <i></i>
-                        <div>Search</div>
-                      </div>
+                      <i></i>
+                      <div>Hashtag</div>
                     </div>
                   </label>
                 </li>
                 <li>
                   <label for="geo">
-                    <input name="feed" id="geo" type="radio"/>
+                    <input name="feed" id="geo" type="radio" value="geo"/>
                     <div class="label">
-                      <div class="label-inner">
-                        <i></i>
-                        <div>Localtion</div>
-                      </div>
+                      <i></i>
+                      <div>Localtion</div>
                     </div>
                   </label>
                 </li>
                 <li>
                   <label for="popular">
-                    <input name="feed" id="popular" type="radio"/>
+                    <input name="feed" id="popular" type="radio" value="popular"/>
                     <div class="label">
-                      <div class="label-inner">
-                        <i></i>
-                        <div>Popular</div>
-                      </div>
+                      <i></i>
+                      <div>Popular</div>
                     </div>
                   </label>
                 </li>
               </ul>
-              <p>
-                Search Tag: <input type="text" value="" id="searchTag">
-              </p>
-              <p>
-                Feeds: <select id="feed">
-                  <option value="me">Me</options>
-                  <option value="tags">Tags</options>
-                  <option value="geo">Geo</options>
-                  <option value="popular">Popular</options>
-                </select>
-              </p>
+              <div id="meOptions" class="feedOption">
+                <h3>
+                  Photos from users you follow will appear in your speeddial, just like on your smartphone.
+                </h3>
+              </div>
+              <div id="tagsOptions" class="feedOption">
+                <p>
+                  <span class="hashtag">Hashtag: </span>
+                  <span id="hashChar">#</span>
+                  <input type="text" value="" id="searchTag">
+                </p>
+              </div>
+              <div id="geoOptions" class="feedOption">
+              </div>
+              <div id="popularOptions" class="feedOption">
+                <h3>
+                  The most popular photos on Instagram, right now, will appear in your speeddial.
+                </h3>
+              </div>
             </div>
           </form>
         </section>
