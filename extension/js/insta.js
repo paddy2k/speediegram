@@ -95,7 +95,7 @@ var insta = {
         api_url = "tags/"+  insta.prefs.searchTag.replace('/\s/','') + "/media/recent?"; 
         break;
       case 'geo':
-        api_url = "media/search?lat="+insta.prefs.geoLat+"&lng="+insta.prefs.geoLng+"&"; 
+        api_url = "media/search?lat="+insta.prefs.geoLat+"&lng="+insta.prefs.geoLng+"&distance=5000&"; 
         break;
       case 'me':
         api_url = "users/self/feed?"; 
