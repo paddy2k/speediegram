@@ -136,6 +136,21 @@ var insta = {
     api.send(null);
   },
 
+  post : function(url, callback, data){
+    var api = new XMLHttpRequest();
+    var _this = this;
+    data = data || null;
+
+    api.open( 'POST', url, true);
+    api.onreadystatechange=function(e){
+      if(this.readyState===4){
+        var feed = JSON.parse(this.response);
+        callback(feed.data);
+      }
+    }
+    api.send(data);
+  },
+
   message : function(e){
     var m = e.data;
     switch(m.action){
