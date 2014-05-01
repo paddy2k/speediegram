@@ -11,6 +11,7 @@
 
   <access origin="https://instagram.com" subdomains="true"/>
   <access origin="http://amazonaws.com" subdomains="true"/>
+  <access origin="http://fbcdn.net" subdomains="true"/>
   <access origin="https://google.com" subdomains="true"/>
   <access origin="https://gstatic.com" subdomains="true"/>
   <access origin="https://googleapis.com" subdomains="true"/>
