@@ -1,5 +1,5 @@
 // ==UserScript==
-// @include http://paddy2k.github.com/speediegram/*
+// @include http://paddy2k.github.io/speediegram/*
 // ==/UserScript==
 var message = {};
 var token = window.location.hash.substr(1).split('=');

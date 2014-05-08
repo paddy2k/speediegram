@@ -20,7 +20,7 @@
   <preference name="apiEndpoint" value="https://api.instagram.com/v1/"/>
   <preference name="authEndpoint" value="https://instagram.com/oauth/authorize/"/>
   <preference name="feedPath" value="users/self/feed"/>
-  <preference name="callback" value="http://paddy2k.github.com/speediegram/"/>
+  <preference name="callback" value="http://paddy2k.github.io/speediegram/"/>
   <preference name="clientId" value="7ac4b011a4ae43a4a03ba34ed7b0ec6b"/>
   <preference name="gridInterval" value="120"/>
   <preference name="stackInterval" value="5"/>
