@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/speediegram" version="0.1" viewmodes="minimized">
+<widget xmlns="http://www.w3.org/ns/widgets" id="https://addons.opera.com/addons/extensions/details/speediegram" version="0.2" viewmodes="minimized">
   <name>Speedie-gram</name>
   <feature name="opera:speeddial">
     <param name="url" value="http://github.com/paddy2k/speediedial"/>
