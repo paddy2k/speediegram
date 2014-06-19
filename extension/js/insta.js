@@ -126,10 +126,19 @@ var insta = {
     api.open( 'GET', url, true );
     api.onreadystatechange=function(e){
       if(this.readyState===4){
-        var feed = JSON.parse(this.response);
-        callback(feed.data, page--);
-        if(page>0 && feed.pagination){
-          _this.get(feed.pagination.next_url, callback, false);
+        switch(this.status){
+          case 200:
+            var feed = JSON.parse(this.response);
+            callback(feed.data, page--);
+            if(page>0 && feed.pagination){
+              _this.get(feed.pagination.next_url, callback, false);
+            }
+            break;
+          case 400:
+            // If token has expired, prompt to re auth
+            insta.prefs.token = '';
+            window.location.reload();
+            break;
         }
       }
     }

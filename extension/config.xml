@@ -10,6 +10,8 @@
   <icon src="assets/Instagram-logo-64.png"/>
 
   <access origin="https://instagram.com" subdomains="true"/>
+  <access origin="https://cdninstagram.com" subdomains="true"/>
+  <access origin="http://cdninstagram.com" subdomains="true"/>
   <access origin="http://amazonaws.com" subdomains="true"/>
   <access origin="http://fbcdn.net" subdomains="true"/>
   <access origin="https://google.com" subdomains="true"/>
