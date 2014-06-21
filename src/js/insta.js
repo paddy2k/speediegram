@@ -136,7 +136,7 @@ var insta = {
             break;
           case 400:
             // If token has expired, prompt to re auth
-            insta.prefs.getItem('token') = '';
+            insta.prefs.setItem('token', '');
             window.location.reload();
             break;
         }
