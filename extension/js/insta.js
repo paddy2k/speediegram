@@ -21,13 +21,13 @@ var insta = {
     opera.contexts.speeddial.title="Speedie-gram";
     opera.contexts.speeddial.url=insta.photos[0].link;
     
-    insta.timeout = setTimeout(insta.main, insta.prefs.gridInterval*1000);
+    insta.timeout = setTimeout(insta.main, insta.prefs.getItem('gridInterval')*1000);
   },
 
   fadeStack : function(){
     clearTimeout(insta.timeout);
 
-    var type = insta.prefs.layout;
+    var type = insta.prefs.getItem('layout');
     var photo = insta.photos.shift();
 
     if(photo){   
@@ -62,11 +62,11 @@ var insta = {
         insta.main();
       }
     }
-    insta.timeout = setTimeout(insta.fadeStack, insta.prefs[type+'Interval']*1000);
+    insta.timeout = setTimeout(insta.fadeStack, insta.prefs.getItem(type+'Interval')*1000);
   },
 
   prepFS : function(photos, page){
-    var type = insta.prefs.layout;
+    var type = insta.prefs.getItem('layout');
     if(page > 1){
       insta.photos=[];
     }
@@ -87,15 +87,15 @@ var insta = {
     var api_url = '';
 
     // If no auth token returned default to popular feed.
-    var feed = insta.prefs.token && insta.prefs.token.length ? insta.prefs.feed : 'popular';
+    var feed = insta.prefs.getItem('token') && insta.prefs.getItem('token').length ? insta.prefs.getItem('feed') : 'popular';
 
     // Select Endpoint
     switch(feed){
       case 'tags':
-        api_url = "tags/"+  insta.prefs.searchTag.replace('/\s/','') + "/media/recent?"; 
+        api_url = "tags/"+  insta.prefs.getItem('searchTag').replace('/\s/','') + "/media/recent?"; 
         break;
       case 'geo':
-        api_url = "media/search?lat="+insta.prefs.geoLat+"&lng="+insta.prefs.geoLng+"&distance=5000&"; 
+        api_url = "media/search?lat="+insta.prefs.getItem('geoLat')+"&lng="+insta.prefs.getItem('geoLng')+"&distance=5000&"; 
         break;
       case 'me':
         api_url = "users/self/feed?"; 
@@ -105,10 +105,10 @@ var insta = {
         api_url = "media/popular?";
         break;
     }
-    api_url = insta.prefs.apiEndpoint + api_url + 'access_token=' + insta.prefs.token;
+    api_url = insta.prefs.getItem('apiEndpoint') + api_url + 'access_token=' + insta.prefs.getItem('token');
 
     // Layout
-    switch(insta.prefs.layout){
+    switch(insta.prefs.getItem('layout')){
       case 'grid':
         insta.get(api_url, insta.grid, 2);
         break;
@@ -136,7 +136,7 @@ var insta = {
             break;
           case 400:
             // If token has expired, prompt to re auth
-            insta.prefs.token = '';
+            insta.prefs.getItem('token') = '';
             window.location.reload();
             break;
         }
@@ -159,32 +159,50 @@ var insta = {
     }
     api.send(data);
   },
+  
+  currentPhoto : function(target){
+    var activePhoto = document.querySelector('#frames img.grid:first-child, #frames img.stack:last-child, #frames img.fade:last-child');
+
+    target.postMessage({
+      "action" : "loadPhoto",
+      "data" : activePhoto.dataset['info']
+    });
+  },
 
   message : function(e){
     var m = e.data;
     switch(m.action){
       case 'success':
-        insta.prefs.token = m.access_token;
+        insta.prefs.setItem("token", m.access_token);
         insta.main();
+
+        // Reload Speeddial
+        opera.extension.tabs[opera.extension.tabs.length-1].update({"url":"opera://startpage"});
         break;
       case 'error':
         console.log('auth error');
         document.body.innerHTML = 'auth error';
+        break;
+      case 'reload':
+        insta.main();
+        break;
+      case 'currentPhoto':
+        insta.currentPhoto(e.source);
         break;
     }
     // window.location.reload();
   },
 
   init : function(){
-    insta.authDialog = insta.prefs.authEndpoint+
-      '?client_id='+insta.prefs.clientId
-      +'&redirect_uri='+insta.prefs.callback
+    insta.authDialog = insta.prefs.getItem('authEndpoint')+
+      '?client_id='+insta.prefs.getItem('clientId')
+      +'&redirect_uri='+insta.prefs.getItem('callback')
       +'&response_type=token'
       +'&scope=basic+comments+relationships+likes';
 
     opera.extension.onmessage = insta.message;
 
-    if(typeof(insta.prefs.token)=='undefined' || insta.prefs.token==''){
+    if(typeof(insta.prefs.getItem('token'))=='undefined' || insta.prefs.getItem('token')==''){
       opera.contexts.speeddial.title="Click to Login";
       opera.contexts.speeddial.url = insta.authDialog;
       return false;
@@ -194,4 +212,25 @@ var insta = {
     insta.main();
   }
 }
-window.addEventListener("load", insta.init, false);
+
+opera.isReady(function(){
+  if (!widget.preferences.getItem("_OPERA_INTERNAL_defaultPrefsSet")){
+    widget.preferences.setItem("apiEndpoint", "https://api.instagram.com/v1/");
+    widget.preferences.setItem("authEndpoint", "https://instagram.com/oauth/authorize/");
+    widget.preferences.setItem("feedPath", "users/self/feed");
+    widget.preferences.setItem("callback", "http://paddy2k.github.io/speediegram/");
+    widget.preferences.setItem("clientId", "7ac4b011a4ae43a4a03ba34ed7b0ec6b");
+    widget.preferences.setItem("gridInterval", "120");
+    widget.preferences.setItem("stackInterval", "5");
+    widget.preferences.setItem("fadeInterval", "5");
+    widget.preferences.setItem("feed", "me");
+    widget.preferences.setItem("searchTag", "guinness");
+    widget.preferences.setItem("layout", "fade");
+    widget.preferences.setItem("geoLat", "48.858844");
+    widget.preferences.setItem("geoLng", "2.294351");
+  }
+  widget.preferences.setItem("_OPERA_INTERNAL_defaultPrefsSet", true);
+
+  // Start Extension
+  insta.init();
+});

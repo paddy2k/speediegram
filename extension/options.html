@@ -2,7 +2,8 @@
 <html>
   <head>
     <title>Speedie-gram</title>
-    <script src="js/options.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="oex_shim/operaextensions_background.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <link rel="stylesheet" href="css/options.css">
     <meta charset=utf-8 />
@@ -20,7 +21,7 @@
       <nav>
         <ul>
           <form>
-            <li>
+<!--             <li>
               <label for="photo">
                 <input name="nav" id="photo" type="radio" checked="checked"/>
                 <div class="label">
@@ -30,10 +31,10 @@
                   </div>
                 </div>
               </label>
-             </li>
+             </li> -->
             <li>
               <label for="feeds">
-                <input name="nav" id="feeds" type="radio"/>
+                <input name="nav" id="feeds" type="radio" checked="checked"/>
                 <div class="label">
                   <div class="label-inner">
                     <i></i>
@@ -56,7 +57,7 @@
           </form>
         </ul>
       </nav>
-      <div id="inner" class="photo">
+      <div id="inner" class="feeds">
         <section id="photo">
           <article>
             <img id="currentPhoto" src=""/>
@@ -194,5 +195,6 @@
         </section>
       <div>
     </div>
+    <script src="js/options.js"></script>
   </body>
 </html>

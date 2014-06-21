@@ -1,0 +1,24 @@
+{
+"name": "Speedie-gram",
+"developer": {"name" : "paddy2k", "url" : "https://github.com/paddy2k/speediegram"},
+"description" : "A realtime animated slideshow of photos from Instagram
+This extension uses the Instagram(tm) API and is not endorsed or certified by Instagram. All Instagram(tm) logoes and trademarks displayed on this extension are property of Instagram.",
+"manifest_version" : 2,
+"version" : "0.3",
+"background" : {"page" : "index.html"},
+"icons" : {
+	"128": "assets/Instagram-logo-128.png",
+	"64": "assets/Instagram-logo-64.png"
+},
+"options_page" : "options.html",
+"web_accessible_resources" : ["AUTHORS","LICENCE","README","ie.png","options.bg.png","stations.js","LICENSE.TXT"],
+"permissions" : ["speeddial", "tabs", "webRequest","http://*/*","https://*/*"],
+"speeddial" : {"url": "http://github.com/paddy2k/speediedial"},
+"content_security_policy": "script-src 'self' https://maps.googleapis.com https://mts0.googleapis.com https://maps.gstatic.com 'unsafe-eval'; object-src 'unsafe-eval';",
+"content_scripts": [
+    {
+      "matches": ["http://paddy2k.github.io/speediegram/*"],
+      "js": ["listener.js"]
+    }
+  ]
+}

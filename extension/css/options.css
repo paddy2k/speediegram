@@ -78,7 +78,7 @@ nav li label {
   display:block;
   vertical-align: middle;
   color:#eee;
-  height: 135px;
+  height: 202px;
   text-decoration: none;
   font-weight:normal;
 }
@@ -101,7 +101,7 @@ nav li:last-child input:checked + div{
 }
 nav li div.label-inner{
   left:12px;
-  top:35px;
+  top:75px;
   font-size:1.6em;
   position: relative;
   width:142px;

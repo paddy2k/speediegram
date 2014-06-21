@@ -1,17 +1,23 @@
 var options = {
   init : function(){
-    window.insta = opera.extension.bgProcess.insta;
+    var _this = this;
+    opera.extension.onmessage = function(e){
+      _this.message(e);
+    };
+    this.runtime = chrome.runtime.connect();
     var inputs = document.querySelectorAll('nav input');
     for(var i=0; inputs.length>i;i++){
       inputs[i].onclick=function(){
         document.getElementById('inner').className=this.id;
         switch(this.id){
           case 'photo':
-            options.loadPhoto();
+            _this.runtime.postMessage({
+              "action": "currentPhoto"
+            });
             break;
           case 'feeds':
             document.getElementsByTagName('output')[0].value = document.getElementById('timer').value;
-            document.getElementById('feedOptions').className=widget.preferences.feed;
+            document.getElementById('feedOptions').className=widget.preferences.getItem('feed');
             options.loadMap();
             break;
         }
@@ -19,18 +25,18 @@ var options = {
     }
 
     var timer = document.getElementById('timer');
-    timer.name = widget.preferences.layout + 'Interval';
-    timer.max = widget.preferences.layout == 'grid' ? 600 : 30 ;
-    timer.value = widget.preferences[timer.name];
+    timer.name = widget.preferences.getItem('layout') + 'Interval';
+    timer.max = widget.preferences.getItem('layout') == 'grid' ? 600 : 30 ;
+    timer.value = widget.preferences.getItem(timer.name);
 
     // Update Output
-    document.getElementById('timerOutput').value = widget.preferences[timer.name];
+    document.getElementById('timerOutput').value = widget.preferences.getItem(timer.name);
 
     var inputs = document.querySelectorAll('#feeds input');
     for(var i=0; inputs.length>i;i++){
       // Add onchange event
       inputs[i].onchange=function(){
-        widget.preferences[this.name] = this.value;
+        widget.preferences.setItem(this.name, this.value);
         if(this.name=='layout'){
           var timer = document.getElementById('timer');
           timer.name = this.value + 'Interval';
@@ -38,14 +44,14 @@ var options = {
           timer.value = widget.preferences[timer.name];
 
           // Update Output
-          document.getElementById('timerOutput').value = widget.preferences[timer.name];
+          document.getElementById('timerOutput').value = widget.preferences.getItem(timer.name);
         }
-        document.getElementById('feedOptions').className=widget.preferences.feed;
+        document.getElementById('feedOptions').className=widget.preferences.getItem('feed');
         options.loadMap();
-        insta.main();
+        _this.runtime.postMessage({"action": "reload"});
       }
 
-      var currentValue = widget.preferences[inputs[i].name];
+      var currentValue = widget.preferences.getItem(inputs[i].name);
       if(inputs[i].type=='radio'){
         console.log(inputs[i].id +'_'+currentValue);
         if(inputs[i].id==currentValue){
@@ -53,28 +59,32 @@ var options = {
         }
       }
       else{
-        inputs[i].value = widget.preferences[inputs[i].name];
+        inputs[i].value = widget.preferences.getItem(inputs[i].name);
       }
       console.log(inputs[i]);
     }
 
     var selects = document.querySelectorAll('#inner select, #inner input[id=searchTag]');
     for(var i=0; selects.length>i;i++){
-      selects[i].value = widget.preferences[selects[i].id];
+      selects[i].value = widget.preferences.getItem(selects[i].id);
       selects[i].onchange=function(){
-        widget.preferences[this.id] = this.value;
-        insta.main();
+        widget.preferences.setItem(this.id, this.value);
+        _this.runtime.postMessage({"action": "reload"});
       }
     }
-    options.loadPhoto();
+
+    document.getElementsByTagName('output')[0].value = document.getElementById('timer').value;
+    document.getElementById('feedOptions').className=widget.preferences.getItem('feed');
+    options.loadMap();
   },
 
   loadMap : function() {
-    if(widget.preferences.feed != 'geo'){
+    var _this = this;
+    if(widget.preferences.getItem('feed') != 'geo'){
       return false;
     }
 
-    var pinLatlng = new google.maps.LatLng(parseFloat(widget.preferences.geoLat), parseFloat(widget.preferences.geoLng));
+    var pinLatlng = new google.maps.LatLng(parseFloat(widget.preferences.getItem('geoLat')), parseFloat(widget.preferences.getItem('geoLng')));
     var mapOptions = {
       zoom: 15,
       center: pinLatlng,
@@ -95,23 +105,33 @@ var options = {
 
     google.maps.event.addListener(marker, "dragend", function(e, f, g) {
         var latLng = e.latLng.toUrlValue().split(',');
-        widget.preferences.geoLat = latLng[0];
-        widget.preferences.geoLng = latLng[1];
+        widget.preferences.setItem("geoLat" , latLng[0]);
+        widget.preferences.setItem("geoLng" , latLng[1]);
         map.panTo(e.latLng);
-        insta.main();
+        _this.runtime.postMessage({"action": "reload"});
     });
   },
 
-  loadPhoto : function(){
-    var activePhoto = opera.extension.bgProcess.document.querySelector('#frames img.grid:first-child, #frames img.stack:last-child, #frames img.fade:last-child');
-    var photo = JSON.parse(activePhoto.dataset.info);
-    
+  loadPhoto : function(photoData){    
+    var photo = JSON.parse(photoData);
     document.getElementById('currentPhoto').src = photo.images.low_resolution.url;
     document.getElementById('currentUser').innerText = photo.user.username;
     document.getElementById('currentName').innerText = photo.user.full_name;
     document.getElementById('currentLikesValue').innerText = photo.likes.count;
     document.getElementById('currentCommentsValue').innerText = photo.comments.count;
     document.getElementById('quote').innerText = photo.caption ? photo.caption.text : '';
+  },
+
+  message : function(e){
+    var m = e.data;
+    switch(m.action){
+      case 'loadPhoto':
+        this.loadPhoto(m.data);
+        break;
+    }
   }
 }
-window.addEventListener("load", options.init, false);
+
+opera.isReady(function(){
+  options.init()
+});
