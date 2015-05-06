@@ -322,7 +322,7 @@ blockquote p:first-letter {
   overflow: hidden;
 }
 #feedOptions li{
-  margin: auto;
+  margin: auto 0;
 }
 #feedOptions ul{
   border-radius: 10px 10px 0px 0px;
