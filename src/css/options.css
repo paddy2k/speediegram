@@ -359,8 +359,9 @@ blockquote p:first-letter {
 
 #feedOptions label div{
   text-align: center;
-  color:#eee;
-  width:134px;
+  color: #eee;
+  width: 134px;
+  height: 45px;
 }
 #feedOptions li{
   border-left: 1px solid #1C5380;
