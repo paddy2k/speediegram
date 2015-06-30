@@ -510,7 +510,7 @@ var OEvent = function(eventType, eventProperties) {
   
   var props = eventProperties || {};
   
-  var newEvt = new CustomEvent(eventType, true, true);
+  var newEvt = new CustomEvent(eventType, { "bubbles": true, "cancelable": true });
 
   for(var i in props) {
     newEvt[i] = props[i];
