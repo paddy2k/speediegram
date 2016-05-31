@@ -177,7 +177,7 @@ var insta = {
         insta.main();
 
         // Reload Speeddial
-        opera.extension.tabs[opera.extension.tabs.length-1].update({"url":"opera://startpage"});
+        opera.extension.tabs.getFocused().update({"url":"opera://startpage"});
         break;
       case 'error':
         console.log('auth error');
